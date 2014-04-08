@@ -6,21 +6,22 @@ using System.Threading.Tasks;
 
 namespace checkers
 {
-    public class MoveInfo
+    public class Move
     {
-        public MoveInfo(Point from, Point to)
+        public Move(Point from, Point to)
         {
-            this.Field = Game.Field;
+            this.From = from;
+            this.To = to;
         }
-        public List<Move> Moves
+        public Point From
         {
             get;
             set;
         }
-        public Checker[,] Field
+        public Point To
         {
             get;
-            private set;
+            set;
         }
     }
 }

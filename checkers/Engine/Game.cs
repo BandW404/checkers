@@ -10,5 +10,11 @@ namespace checkers
     {
         public static Checker[,] Field;
 
+
+        public static void Begin()
+        {
+
+        }
+
     }
 }

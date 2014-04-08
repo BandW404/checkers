@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace checkers
 {
-    class Player
+    class Player : IPlayer
     {
+        public Color color
+        {
+            get;
+            private set;
+        }
+
+        public MoveInfo MakeTurn(MoveInfo moveInfo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
