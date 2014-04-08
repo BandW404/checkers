@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace checkers
 {
-    class Player : IPlayer
+    public class Player : IPlayer
     {
         public Color color
         {

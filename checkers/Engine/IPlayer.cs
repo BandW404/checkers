@@ -11,7 +11,6 @@ namespace checkers
         Color color
         {
             get;
-            set;
         }
         MoveInfo MakeTurn(MoveInfo moveInfo);
     }

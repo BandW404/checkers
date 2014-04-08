@@ -6,11 +6,23 @@ using System.Threading.Tasks;
 
 namespace checkers
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             //hello
+            //Game.Begin();
+            //for (var i = 0; i < 8; i++)
+            //{
+            //    for (var j = 0; j < 8; j++)
+            //    {
+            //        if (Game.Field[j, i] != null)
+            //            Console.Write(Game.Field[j, i].Color + " ");
+            //        else
+            //            Console.Write("null  ");
+            //    }
+            //    Console.WriteLine();
+            //}
         }
     }
 }

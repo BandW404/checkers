@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace checkers
 {
-    enum Color {Black, White};
+    public enum Color {Black, White};
     public class Checker
     {
         public Checker(Color color, bool isQueen)
