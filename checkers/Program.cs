@@ -10,6 +10,7 @@ namespace checkers
     {
         static void Main(string[] args)
         {
+            //hello
         }
     }
 }
