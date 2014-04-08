@@ -8,7 +8,11 @@ namespace checkers
 {
     public class Player : IPlayer
     {
-        public Color color
+        public Player(Color color)
+        {
+            this.Color = color;
+        }
+        public Color Color
         {
             get;
             private set;

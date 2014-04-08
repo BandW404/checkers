@@ -8,7 +8,7 @@ namespace checkers
 {
     interface IPlayer
     {
-        Color color
+        Color Color
         {
             get;
         }
