@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "checkers", "checkers\checkers.csproj", "{3E70F0A1-D0A3-4BEF-8106-CE5FC44C1E3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidatorTests", "UnitTestProject1\ValidatorTests.csproj", "{B7F44BD9-308B-4D3D-8A6A-8196F549B938}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{3E70F0A1-D0A3-4BEF-8106-CE5FC44C1E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E70F0A1-D0A3-4BEF-8106-CE5FC44C1E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E70F0A1-D0A3-4BEF-8106-CE5FC44C1E3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7F44BD9-308B-4D3D-8A6A-8196F549B938}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7F44BD9-308B-4D3D-8A6A-8196F549B938}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7F44BD9-308B-4D3D-8A6A-8196F549B938}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7F44BD9-308B-4D3D-8A6A-8196F549B938}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
