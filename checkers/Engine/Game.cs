@@ -21,7 +21,7 @@ namespace checkers
         public static IPlayer WhitePlayer;
         public static IPlayer BlackPlayer;
         public static bool isGameOver;
-        public static Validator validator;
+        public static Validator validator; // убрать паблики
 
         public static void StartGame()
         {

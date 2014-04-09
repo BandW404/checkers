@@ -23,5 +23,6 @@ namespace checkers
             get;
             private set;
         }
+        //принимаем мувинфо возвращаем лист(мув)
     }
 }
