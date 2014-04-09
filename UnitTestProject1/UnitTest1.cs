@@ -9,7 +9,7 @@ namespace checkers
         [TestMethod]
         public void MustAttack()
         {
-            //var validator = new Validator();
+            //var validator = new Validator(); test
             var field = new Checker[8, 8];
             field[2, 2] = new Checker(Color.White, false);
             field[3, 3] = new Checker(Color.Black, false);
