@@ -8,21 +8,21 @@ namespace checkers
 {
     public class Validator
     {
-        public bool IsCorrectMove(MoveInfo moveInfo, Color playerColor)
+        public bool IsCorrectMove(List<Move> moves, Checker[,] field, Color playerColor)
         {
             var result = true;
-            foreach (var turn in moveInfo.Moves)
+            foreach (var turn in moves)
                 if (result)
                 {
-                    var bindingMoves = GetBindingMoves(moveInfo.Field, playerColor);
+                    var bindingMoves = GetBindingMoves(field, playerColor);
                     if (bindingMoves.Count != 0 && !bindingMoves.Contains(turn))
                         return false;
-                    if (!moveInfo.Field[turn.From.X, turn.From.Y].IsQueen)
-                        result &= IsCheckerTurnCorrect(moveInfo.Field, playerColor, turn);
+                    if (!field[turn.From.X, turn.From.Y].IsQueen)
+                        result &= IsCheckerTurnCorrect(field, playerColor, turn);
                     else
-                        result &= IsQuennTurnCorrect(moveInfo.Field, playerColor, turn);
+                        result &= IsQuennTurnCorrect(field, playerColor, turn);
                     if (result)
-                        MakeMove(moveInfo.Field, turn);
+                        MakeMove(field, turn);
                 }
                 else break;
             return result;
@@ -62,7 +62,7 @@ namespace checkers
 
         private bool InField(Checker[,] field, Point pos)
         {
-            return pos.X < field.GetLength(0) && pos.X > 0 && pos.Y < field.GetLength(1) && pos.Y > 0;
+            return pos.X < 8 && pos.X > 0 && pos.Y < 8 && pos.Y > 0;
         }
 
         private HashSet<Move> GetBindingMoves(Checker[,] field, Color playerColor)
