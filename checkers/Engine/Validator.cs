@@ -21,6 +21,8 @@ namespace checkers
                         result &= IsCheckerTurnCorrect(moveInfo.Field, playerColor, turn);
                     else
                         result &= IsQuennTurnCorrect(moveInfo.Field, playerColor, turn);
+                    if (result)
+                        MakeMove(moveInfo.Field, turn);
                 }
                 else break;
             return result;
@@ -28,13 +30,23 @@ namespace checkers
 
         private bool IsCheckerTurnCorrect(Checker[,] field, Color playerColor, Move turn)
         {
-            var dx = new int[]{ 1, -1, 1, -1 };
-            var dy = new int[]{ -1, 1, 1, -1 };
+            var dx = new int[]{ 1, -1 };
+            var dy = new int[]{ -1, 1 };
+            for (var x = 0; x < 2; x++)
+                for (var y = 0; y < 2; y++)
+                    if (InField(field, new Point(turn.From.X + dx[x], turn.From.Y + dy[y])))
+                        return field[turn.From.X + dx[x], turn.From.Y + dy[y]] == null &&
+                            turn.From.X + dx[x] == turn.To.X && turn.From.Y + dy[y] == turn.To.Y;//ламповая проверка на возможность хода 
+            dx = new int[] { 3, -3, 3, -3 };
+            dy = new int[] { -3, -3, 3, 3 };
             for (var x = 0; x < 4; x++)
                 for (var y = 0; y < 4; y++)
                     if (InField(field, new Point(turn.From.X + dx[x], turn.From.Y + dy[y])))
-                        return field[turn.From.X + dx[x], turn.From.Y + dy[y]] == null &&
-                            turn.From.X + dx[x] == turn.To.X && turn.From.Y + dy[y] == turn.To.Y; //ламповая проверка на возможность хода 
+                        if (field[turn.From.X + dx[x], turn.From.Y + dy[y]] == null)
+                        {
+                            if (field[turn.From.X + dx[x], turn.From.Y + dy[y]].Color != playerColor)//ламповая проверка на возможность атаки
+                                return true;
+                        }
             return false;
         }
 
@@ -55,7 +67,17 @@ namespace checkers
 
         private HashSet<Move> GetBindingMoves(Checker[,] field, Color playerColor)
         {
-            return new HashSet<Move>();
+            return new HashSet<Move>(); //hashset of turns that player has to do
+        }
+
+        private bool IsNeighbourEnemy( Checker[,] field, Point pos)
+        {
+            return true;
+        }
+
+        private void MakeMove(Checker[,] field, Move move)
+        {
+
         }
     }
 }
