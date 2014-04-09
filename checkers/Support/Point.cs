@@ -23,6 +23,21 @@ namespace checkers
             get;
             set;
         }
-
+        public static bool operator ==(Point a, Point b)
+        {
+            return a.X == b.X && a.Y == b.Y;
+        }
+        public override bool Equals(object a)
+        {
+            return this == (Point)a;
+        }
+        public static bool operator !=(Point a, Point b)
+        {
+            return !(a == b);
+        }
+        public override int GetHashCode()
+        {
+            return 0;
+        }
     }
 }
