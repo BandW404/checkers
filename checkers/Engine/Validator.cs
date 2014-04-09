@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace checkers
 {
-    class Validator
+    public class Validator
     {
         public bool IsCorrectMove(MoveInfo moveInfo, Color playerColor)
         {
