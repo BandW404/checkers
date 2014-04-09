@@ -12,6 +12,6 @@ namespace checkers
         {
             get;
         }
-        MoveInfo MakeTurn(MoveInfo moveInfo);
+        List<Move> MakeTurn(MoveInfo moveInfo);
     }
 }

@@ -18,7 +18,7 @@ namespace checkers
             private set;
         }
 
-        public MoveInfo MakeTurn(MoveInfo moveInfo)
+        public List<Move> MakeTurn(MoveInfo moveInfo)
         {
             throw new NotImplementedException();
         }

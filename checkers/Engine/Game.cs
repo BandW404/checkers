@@ -15,41 +15,40 @@ namespace checkers
         }
     }
 
-    public static class Game
+    public class Game
     {
-        public static Checker[,] Field;
-        public static IPlayer WhitePlayer;
-        public static IPlayer BlackPlayer;
-        public static bool isGameOver;
-        public static Validator validator; // убрать паблики
+        Checker[,] field;
+        IPlayer whitePlayer;
+        IPlayer blackPlayer;
+        Validator validator; // убрать паблики
 
-        public static void StartGame()
+        public void StartGame()
         {
             validator = new Validator();
-            WhitePlayer = new Player(Color.White);
-            BlackPlayer = new Player(Color.Black);
-            Field = new Checker[8, 8];
+            whitePlayer = new Player(Color.White);
+            blackPlayer = new Player(Color.Black);
+            field = new Checker[8, 8];
             for (var i = 0; i < 4; i++)
                 for (var j = 0; j < 3; j++)
                     if (j == 1)
                     {
-                        Field[i * 2 + 1, 7 - j] = new Checker(Color.White, false);
-                        Field[i * 2, j] = new Checker(Color.Black, false);
+                        field[i * 2 + 1, 7 - j] = new Checker(Color.White, false);
+                        field[i * 2, j] = new Checker(Color.Black, false);
                     }
                     else
                     {
-                        Field[i * 2, 7 - j] = new Checker(Color.White, false);
-                        Field[i * 2 + 1, j] = new Checker(Color.Black, false);
+                        field[i * 2, 7 - j] = new Checker(Color.White, false);
+                        field[i * 2 + 1, j] = new Checker(Color.Black, false);
                     }
-            var moveInfo = new MoveInfo();
-            while (!isGameOver)
+            var moveInfo = new MoveInfo(field);
+            while (true)
             {
-                moveInfo = WhitePlayer.MakeTurn(moveInfo);
-                if (!validator.IsCorrectMove(moveInfo, Color.White))
-                    GameOver(Color.Black);
-                moveInfo = BlackPlayer.MakeTurn(moveInfo);
-                if (!validator.IsCorrectMove(moveInfo, Color.Black))
-                    GameOver(Color.White);
+                //moveInfo = whitePlayer.MakeTurn(moveInfo);
+                //if (!validator.IsCorrectMove(moveInfo, Color.White))
+                //    GameOver(Color.Black);
+                //moveInfo = blackPlayer.MakeTurn(moveInfo);
+                //if (!validator.IsCorrectMove(moveInfo, Color.Black))
+                //    GameOver(Color.White);
             }
         }
         public static void GameOver(Color winner)

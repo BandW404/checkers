@@ -8,16 +8,16 @@ namespace checkers
 {
     public class MoveInfo
     {
-        public MoveInfo()
+        public MoveInfo(Checker[,] field)
         {
-            this.Field = Game.Field;
-            Moves = new List<Move>();
+            this.Field = field;
+            //Moves = new List<Move>();
         }
-        public List<Move> Moves
-        {
-            get;
-            set;
-        }
+        //public List<Move> Moves
+        //{
+        //    get;
+        //    set;
+        //}
         public Checker[,] Field
         {
             get;

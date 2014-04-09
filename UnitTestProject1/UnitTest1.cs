@@ -9,9 +9,9 @@ namespace checkers
         void TwoSimpleCheckersTest(MoveInfo moveInfo, Color color, bool answer)
         {
             var validator = new Validator();
-            Game.Field = new Checker[8, 8];
-            Game.Field[2, 2] = new Checker(Color.Black, false);
-            Game.Field[3, 3] = new Checker(Color.White, false);
+            Game.field = new Checker[8, 8];
+            Game.field[2, 2] = new Checker(Color.Black, false);
+            Game.field[3, 3] = new Checker(Color.White, false);
             Assert.AreEqual(validator.IsCorrectMove(moveInfo, color), answer);
         }
         [TestMethod]
