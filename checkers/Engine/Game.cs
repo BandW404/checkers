@@ -41,7 +41,7 @@ namespace checkers
                         Field[i * 2, 7 - j] = new Checker(Color.White, false);
                         Field[i * 2 + 1, j] = new Checker(Color.Black, false);
                     }
-            var moveInfo = new MoveInfo(null, null);
+            var moveInfo = new MoveInfo();
             while (!isGameOver)
             {
                 moveInfo = WhitePlayer.MakeTurn(moveInfo);

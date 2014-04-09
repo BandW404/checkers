@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace checkers
 {
-    interface IPlayer
+    public interface IPlayer
     {
         Color Color
         {
