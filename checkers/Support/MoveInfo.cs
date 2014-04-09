@@ -8,9 +8,10 @@ namespace checkers
 {
     public class MoveInfo
     {
-        public MoveInfo(Point from, Point to)
+        public MoveInfo()
         {
             this.Field = Game.Field;
+            Moves = new List<Move>();
         }
         public List<Move> Moves
         {
