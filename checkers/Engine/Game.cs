@@ -41,14 +41,15 @@ namespace checkers
                         field[i * 2 + 1, j] = new Checker(Color.Black, false);
                     }
             var moveInfo = new MoveInfo(field);
+            List<Move> listOfMoves;
             while (true)
             {
-                //moveInfo = whitePlayer.MakeTurn(moveInfo);
-                //if (!validator.IsCorrectMove(moveInfo, Color.White))
-                //    GameOver(Color.Black);
-                //moveInfo = blackPlayer.MakeTurn(moveInfo);
-                //if (!validator.IsCorrectMove(moveInfo, Color.Black))
-                //    GameOver(Color.White);
+                listOfMoves = whitePlayer.MakeTurn(moveInfo);
+                if (!validator.IsCorrectMove(listOfMoves, field, Color.White))
+                    GameOver(Color.Black);
+                listOfMoves = blackPlayer.MakeTurn(moveInfo);
+                if (!validator.IsCorrectMove(listOfMoves, field, Color.Black))
+                    GameOver(Color.White);
             }
         }
         public static void GameOver(Color winner)

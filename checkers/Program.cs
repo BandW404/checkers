@@ -8,7 +8,7 @@ namespace checkers
 {
     public class Program
     {
-
+        public static Random Rand = new Random();
         public static void Main(string[] args)
         {
             //hello
@@ -24,6 +24,11 @@ namespace checkers
             //    }
             //    Console.WriteLine();
             //}
+            //var a = new Move(new Point(0, 1), new Point(2, 3));
+            //var b = new Move(new Point(0, 1), new Point(2, 3));
+            //var q = new List<Move>();
+            //q.Add(a);
+            //Console.Write(q.Contains(b));
         }
     }
 }
