@@ -37,8 +37,8 @@ namespace checkers
         public void CheckCorrectMap()
         {
             var field = GetMapFrom("Tests1.txt");
-            var a = field[2, 2].Color == Color.White;
-            var b = field[3, 3].Color == Color.Black;
+            var a = field[3, 3].Color == Color.White;
+            var b = field[2, 2].Color == Color.Black;
             var c = field[4, 4] == null;
             Assert.AreEqual(a && b && c, true);
         }
