@@ -50,15 +50,15 @@ namespace checkers
             
             dx = new int[] { 2, -2, 2, -2 };
             dy = new int[] { -2, -2, 2, 2 };
-            /*
             for (var i = 0; i < 4; i++)
                 if (InField(new Point(turn.From.X + dx[i], turn.From.Y + dy[i])))
                     if (field[turn.From.X + dx[i], turn.From.Y + dy[i]] == null)
                     {
                         var decr = GetDecreasedDim(dx[i], dy[i]);
-                        if (field[turn.From.X + decr.X, turn.From.Y + decr.Y].Color != playerColor)//ламповая проверка на возможность атаки
+                        if (field[turn.From.X + decr.X, turn.From.Y + decr.Y] != null &&
+                            field[turn.From.X + decr.X, turn.From.Y + decr.Y].Color != playerColor)//ламповая проверка на возможность атаки
                             return true;
-                    }*/
+                    }
             return false;
         }
 
