@@ -233,7 +233,7 @@ namespace checkers
             Test(moves, Color.White, true, "Tests7.txt");
         }
         [TestMethod]
-        public void QueenAttack2()
+        public void QueenAttack3()
         {
             var moves = new List<Move>();
             moves.Add(new Move(new Point(1, 1), new Point(7, 7)));
