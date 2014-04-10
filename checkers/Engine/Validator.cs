@@ -16,7 +16,7 @@ namespace checkers
                 {
                     var bindingMoves = GetBindingMoves(field, playerColor);
                     if (bindingMoves.Count != 0 && !bindingMoves.Contains(turn))
-                        throw new NotImplementedException("Not a binding move");
+                        throw new NotImplementedException();
                     if (!field[turn.From.X, turn.From.Y].IsQueen)
                         result &= IsCheckerTurnCorrect(field, playerColor, turn);
                     else
@@ -24,38 +24,45 @@ namespace checkers
                     if (result)
                         MakeMove(field, turn);
                 }
-                else throw new NotImplementedException();
+                if (!result) throw new NotImplementedException();
             return;
         }
 
         private bool IsCheckerTurnCorrect(Checker[,] field, Color playerColor, Move turn)
         {
-            var dx = new int[]{ 1, -1 };
-            var dy = new int[]{ -1, 1 };
-            for (var x = 0; x < 2; x++)
-                for (var y = 0; y < 2; y++)
-                    if (InField(new Point(turn.From.X + dx[x], turn.From.Y + dy[y])))
-                        return field[turn.From.X + dx[x], turn.From.Y + dy[y]] == null &&
-                            turn.From.X + dx[x] == turn.To.X && turn.From.Y + dy[y] == turn.To.Y;//ламповая проверка на возможность хода 
-            dx = new int[] { 3, -3, 3, -3 };
-            dy = new int[] { -3, -3, 3, 3 };
-            for (var x = 0; x < 4; x++)
-                for (var y = 0; y < 4; y++)
-                    if (InField(new Point(turn.From.X + dx[x], turn.From.Y + dy[y])))
-                        if (field[turn.From.X + dx[x], turn.From.Y + dy[y]] == null)
-                        {
-                            if (field[turn.From.X + dx[x], turn.From.Y + dy[y]].Color != playerColor)//ламповая проверка на возможность атаки
-                                return true;
-                        }
+            var dx = new int[2];
+            var dy = new int[2];
+            if (playerColor == Color.White)
+            {
+                dx = new int[] { 1, -1 };
+                dy = new int[] { 1, -1 };
+            }
+            else
+            {
+                dx = new int[] { -1, 1 };
+                dy = new int[] { 1, 1 };
+            }
+            for (var i = 0; i < 2; i++)
+                if (InField(new Point(turn.From.X + dx[i], turn.From.Y + dy[i])))
+                    if (field[turn.From.X + dx[i], turn.From.Y + dy[i]] == null &&
+                        turn.From.X + dx[i] == turn.To.X && turn.From.Y + dy[i] == turn.To.Y)
+                        return true;//ламповая проверка на возожность хода 
+            
+            dx = new int[] { 2, -2, 2, -2 };
+            dy = new int[] { -2, -2, 2, 2 };
+            /*
+            for (var i = 0; i < 4; i++)
+                if (InField(new Point(turn.From.X + dx[i], turn.From.Y + dy[i])))
+                    if (field[turn.From.X + dx[i], turn.From.Y + dy[i]] == null)
+                    {
+                        var decr = GetDecreasedDim(dx[i], dy[i]);
+                        if (field[turn.From.X + decr.X, turn.From.Y + decr.Y].Color != playerColor)//ламповая проверка на возможность атаки
+                            return true;
+                    }*/
             return false;
         }
 
         private bool IsQuennTurnCorrect(Checker[,] field, Color playerColor, Move turn)
-        {
-            return true;
-        }
-
-        private bool IsNextTurnPossible(Checker[,] field, Color playerColor, Move turn)
         {
             return true;
         }
@@ -87,9 +94,11 @@ namespace checkers
             return ans;
         }
 
-        private bool IsNeighbourEnemy(Checker[,] field, Point pos)
+        private Point GetDecreasedDim(int x, int y)
         {
-            return true;
+            var dx = x > 0 ? x - 1 : x + 1;
+            var dy = y > 0 ? y - 1 : y + 1;
+            return new Point(dx, dy);
         }
 
         private void MakeMove(Checker[,] field, Move move)
