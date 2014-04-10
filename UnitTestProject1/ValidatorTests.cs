@@ -217,14 +217,14 @@ namespace checkers
         public void WrongKill()
         {
             var moves = new List<Move>();
-            moves.Add(new Move(new Point(3, 3), new Point(5, 5)));
+            moves.Add(new Move(new Point(2, 2), new Point(4, 4)));
             Test(moves, Color.White, false, "Tests6.txt");
         }
         [TestMethod]
         public void WrongKill2()
         {
             var moves = new List<Move>();
-            moves.Add(new Move(new Point(4, 4), new Point(2, 2)));
+            moves.Add(new Move(new Point(3, 3), new Point(1, 1)));
             Test(moves, Color.White, false, "Tests6.txt");
         }
         [TestMethod]
