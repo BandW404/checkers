@@ -113,7 +113,7 @@ namespace checkers
             moves.Add(new Move(new Point(6, 6), new Point(5, 7)));
             Test(moves, Color.Black, false, "Tests2.txt");
         }
-        [TestMethod] //?
+        [TestMethod] 
         public void NormalMoveWhite()
         {
             var moves = new List<Move>();
@@ -140,6 +140,41 @@ namespace checkers
             var moves = new List<Move>();
             moves.Add(new Move(new Point(6, 6), new Point(5, 7)));
             Test(moves, Color.White, false, "Tests3.txt");
+        }
+        [TestMethod]
+        public void WrongMoveWhite()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(6, 6), new Point(4, 4)));
+            Test(moves, Color.White, false, "Tests3.txt");
+        }
+        [TestMethod]
+        public void WrongMoveBlack()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(6, 6), new Point(6, 7)));
+            Test(moves, Color.Black, false, "Tests3.txt");
+        }
+        [TestMethod] 
+        public void NormalQueenMoveWhite()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(7, 4), new Point(5, 6)));
+            Test(moves, Color.White, true, "Tests4.txt");
+        }
+        [TestMethod]
+        public void NormalQueenMoveBlack()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(7, 0), new Point(0, 7)));
+            Test(moves, Color.Black, true, "Tests4.txt");
+        }
+        [TestMethod]
+        public void WrongQueenMove()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(7, 0), new Point(7, 7)));
+            Test(moves, Color.Black, false, "Tests4.txt");
         }
     }
 }
