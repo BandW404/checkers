@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace checkers
 {
     [TestClass]
-    public class UnitTest1
+    public class ValidatorTests
     {
         Checker[,] GetMapFrom(string filename)
         {
