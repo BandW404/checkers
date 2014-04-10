@@ -67,8 +67,7 @@ namespace checkers
         private bool IsQuennTurnCorrect(Checker[,] field, Color playerColor, Move turn)
         {
             var possibleAttack = Bind(field, new Point(turn.From.X, turn.From.Y), playerColor);
-
-            return false;
+            return possibleAttack.Contains(turn) || IsRightQueenMove(turn, field, playerColor);
         }
 
         private bool InField(Point pos)
@@ -95,7 +94,7 @@ namespace checkers
                                     field[free.X, free.Y] == null)
                                     ans.Add(new Move(from, free));
                             }
-            AddToHash(ans, GetAllQueenBinds(field, playerColor));
+            AddToHash(ans, AddBindingForQueens(field, playerColor));
             return ans;
         }
 
@@ -103,6 +102,31 @@ namespace checkers
         {
             foreach (var e in other)
                 source.Add(e);
+        }
+
+        private bool IsRightQueenMove(Move move, Checker[,] field, Color playerColor)
+        {
+            var dx = new int[] { 1, -1, 1, -1 };
+            var dy = new int[] { -1, -1, 1, 1 };
+            var x = move.From.X;
+            var y = move.From.Y;
+            for (var i = 0; i < 4; i++)
+            {
+                var enemyFound = false;
+                for (var delta = 1; delta < 8; delta++)
+                    if (!enemyFound)
+                    if (InField(new Point(x + dx[i] * delta, y + dy[i] * delta)))
+                    {
+                        if (field[x + dx[i] * delta, y + dy[i] * delta] != null)
+                        {
+                            enemyFound = true;
+                            continue;
+                        }
+                        if (move.To.X == x + dx[i] * delta && move.To.Y == y + dy[i] * delta)
+                            return true;
+                    }
+            }
+            return false;
         }
 
         private HashSet<Move> Bind(Checker[,] field, Point pos, Color playerColor)
@@ -115,6 +139,7 @@ namespace checkers
             for (var i = 0; i < 4; i++)
             {
                 var noEnemy = true;
+                var enemyFound = false;
                 for (var delta = 1; delta < 8; delta++)
                     if  (InField(new Point(x+dx[i]*delta, y+dy[i]*delta)))
                     { 
@@ -127,17 +152,21 @@ namespace checkers
                                 noEnemy = false;
                         }
                         if (field[x+dx[i]*delta, y+dy[i]*delta] != null)
-                            if (field[x+dx[i]*delta, y+dy[i]*delta].Color != playerColor && noEnemy
+                            if ((field[x+dx[i]*delta, y+dy[i]*delta].Color != playerColor || enemyFound) && noEnemy
                                 && field[x+dx[i]*(delta+1), y+dy[i]*(delta+1)] == null)
                             {
                                 ans.Add(new Move(new Point(x,y), new Point(x+dx[i]*(delta+1), y+dy[i]*(delta+1))));
+                                enemyFound = true;
                             }
+                        if (enemyFound && field[x + dx[i] * delta, y + dy[i] * delta] == null)
+                            ans.Add(new Move(new Point(x, y), new Point(x + dx[i] * (delta), y + dy[i] * (delta))));
                         }
             }
             return ans;
         }
 
-        private HashSet<Move> GetAllQueenBinds(Checker[,] field, Color color)
+
+        public HashSet<Move> AddBindingForQueens(Checker[,] field, Color color)
         {
             var ans = new HashSet<Move>();
             for (var i = 0; i < 8; i++)
