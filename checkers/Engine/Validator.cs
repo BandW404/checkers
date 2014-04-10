@@ -165,7 +165,17 @@ namespace checkers
             return ans;
         }
 
-
+        private Tuple<int,int> GetDelta(Move move)
+        {
+            var dx = 0;
+            var dy = 0;
+            Tuple<int,int> ans = new Tuple<int,int>(0,0);
+            if (move.To.X > move.From.X && move.To.Y > move.From.Y) ans = new Tuple<int, int>(1, 1);
+            if (move.To.X > move.From.X && move.To.Y < move.From.Y) ans = new Tuple<int, int>(1, -1);
+            if (move.To.X < move.From.X && move.To.Y > move.From.Y) ans = new Tuple<int, int>(-1, 1);
+            if (move.To.X < move.From.X && move.To.Y < move.From.Y) ans = new Tuple<int, int>(-1, -1);
+            return ans;
+        }
         public HashSet<Move> AddBindingForQueens(Checker[,] field, Color color)
         {
             var ans = new HashSet<Move>();
@@ -185,6 +195,25 @@ namespace checkers
 
         private void MakeMove(Checker[,] field, Move move)
         {
+            var delta = GetDelta(move);
+            var dx = delta.Item1;
+            var dy = delta.Item2;
+            var x = move.From.X;
+            var y = move.From.Y;
+            var checker = new Checker(field[x,y].Color, field[x,y].IsQueen);
+            field[x, y] = null;
+            for (var i = 1; i < 7; i++)
+                if (InField(new Point(x + dx * i, y + dy * i)))
+                {
+                    if (move.To.X == x + dx * i && move.To.Y == y + dy * i)
+                    {
+                        field[x + dx * i, y + dy * i] = checker;
+                        break;
+                    }
+
+                    if (field[x + dx * i, y + dy * i] != null)
+                        field[x + dx * i, y + dy * i] = null;
+                }
 
         }
     }
