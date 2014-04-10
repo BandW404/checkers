@@ -16,7 +16,7 @@ namespace checkers
                 {
                     var bindingMoves = GetBindingMoves(field, playerColor);
                     if (bindingMoves.Count != 0 && !bindingMoves.Contains(turn))
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("Not a binding move");
                     if (!field[turn.From.X, turn.From.Y].IsQueen)
                         result &= IsCheckerTurnCorrect(field, playerColor, turn);
                     else
@@ -24,8 +24,8 @@ namespace checkers
                     if (result)
                         MakeMove(field, turn);
                 }
-                else break;
-            throw new NotImplementedException();
+                else throw new NotImplementedException();
+            return;
         }
 
         private bool IsCheckerTurnCorrect(Checker[,] field, Color playerColor, Move turn)
