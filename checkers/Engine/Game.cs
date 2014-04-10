@@ -45,11 +45,9 @@ namespace checkers
             while (true)
             {
                 listOfMoves = whitePlayer.MakeTurn(moveInfo);
-                if (!validator.IsCorrectMove(listOfMoves, field, Color.White))
-                    GameOver(Color.Black);
+                validator.IsCorrectMove(listOfMoves, field, Color.White);
                 listOfMoves = blackPlayer.MakeTurn(moveInfo);
-                if (!validator.IsCorrectMove(listOfMoves, field, Color.Black))
-                    GameOver(Color.White);
+                validator.IsCorrectMove(listOfMoves, field, Color.Black);
             }
         }
         public static void GameOver(Color winner)

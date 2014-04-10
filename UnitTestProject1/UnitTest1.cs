@@ -46,7 +46,16 @@ namespace checkers
         {
             var validator = new Validator();
             var field = GetMapFrom(mapname);
-            Assert.AreEqual(validator.IsCorrectMove(moves, field, color), answer);
+            if (!answer)
+                try 
+                { 
+                    validator.IsCorrectMove(moves, field, color); 
+                    Assert.Fail(); 
+                }
+                catch (NotImplementedException e) { }
+            else
+                validator.IsCorrectMove(moves, field, color);
+
         }
         [TestMethod]
         public void MustAttackBlackFalse()
