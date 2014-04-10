@@ -67,6 +67,25 @@ namespace checkers
         private bool IsQuennTurnCorrect(Checker[,] field, Color playerColor, Move turn)
         {
             return true;
+            var dx = new int[] { 1, -1, 1, -1 };
+            var dy = new int[] { -1, -1, 1, 1 };
+            var results = new HashSet<Move>();
+            var x = turn.From.X;
+            var y = turn.To.X;
+            if (field[x, y] != null && field[x, y].IsQueen && field[x, y].Color == playerColor)
+                for (var delta = 1; delta < 8; delta++)
+                    for (var i = 0; i < 4; i++)
+                        if (InField(new Point(x + dx[i] * delta, y + dy[i] * delta)))
+                        {
+                            if (field[x + dx[i] * delta, y + dy[i] * delta] == null)
+                            {
+                                var from = new Point(x, y);
+                                var to = new Point(x + dx[i] * delta, y + dy[i] * delta);
+                                var move = new Move(from, to);
+                                AddToHashset(results, dx[i], dy[i], move, field);
+                            }
+                        }
+            return results.Contains(turn);
         }
 
         private bool InField(Point pos)
@@ -117,7 +136,6 @@ namespace checkers
                                             AddToHashset(moves, dx[i], dy[i], move, field);
                                         }
                     }
-
         }
 
         private void AddToHashset (HashSet<Move> moves, int dx, int dy, Move enemy, Checker[,] field)
