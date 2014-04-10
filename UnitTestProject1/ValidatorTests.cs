@@ -183,5 +183,61 @@ namespace checkers
             moves.Add(new Move(new Point(7, 4), new Point(6, 4)));
             Test(moves, Color.White, false, "Tests4.txt");
         }
+        [TestMethod]
+        public void WrongQueenMoveWhite2()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(1, 1), new Point(7, 7)));
+            Test(moves, Color.White, false, "Tests5.txt");
+        }
+        [TestMethod]
+        public void WrongQueenMoveWhite3()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(1, 1), new Point(5, 5)));
+            Test(moves, Color.White, false, "Tests5.txt");
+        }
+        [TestMethod]
+        public void RightQueenMoveWhite()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(1, 1), new Point(2, 2)));
+            Test(moves, Color.White, true, "Tests5.txt");
+        }
+        [TestMethod]
+        public void WrongKill()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(3, 3), new Point(5, 5)));
+            Test(moves, Color.White, false, "Tests6.txt");
+        }
+        [TestMethod]
+        public void WrongKill2()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(4, 4), new Point(2, 2)));
+            Test(moves, Color.White, false, "Tests6.txt");
+        }
+        [TestMethod]
+        public void QueenAttack1()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(1, 1), new Point(3, 3)));
+            Test(moves, Color.White, true, "Tests7.txt");
+        }
+        [TestMethod]
+        public void QueenAttack2()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(1, 1), new Point(5, 5)));
+            Test(moves, Color.White, true, "Tests7.txt");
+        }
+        [TestMethod]
+        public void QueenAttack2()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(1, 1), new Point(7, 7)));
+            Test(moves, Color.White, true, "Tests7.txt");
+        }
     }
 }
