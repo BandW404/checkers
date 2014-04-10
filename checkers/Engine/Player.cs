@@ -68,7 +68,7 @@ namespace checkers
                     answer.Add(new Move(from, var2));
                 return answer;
             }
-            throw new Exception("drow");
+            throw new Exception("draw");
             //Game.GameOver(Color);
             //return answer; // иначе возвращаем пустой (?)
         }
