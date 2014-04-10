@@ -170,11 +170,18 @@ namespace checkers
             Test(moves, Color.Black, true, "Tests4.txt");
         }
         [TestMethod]
-        public void WrongQueenMove()
+        public void WrongQueenMoveBlack()
         {
             var moves = new List<Move>();
             moves.Add(new Move(new Point(7, 0), new Point(7, 7)));
             Test(moves, Color.Black, false, "Tests4.txt");
+        }
+        [TestMethod]
+        public void WrongQueenMoveWhite()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(7, 4), new Point(6, 4)));
+            Test(moves, Color.White, false, "Tests4.txt");
         }
     }
 }
