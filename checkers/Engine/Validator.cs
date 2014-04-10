@@ -30,6 +30,8 @@ namespace checkers
 
         private bool IsCheckerTurnCorrect(Checker[,] field, Color playerColor, Move turn)
         {
+            if (field[turn.From.X, turn.From.Y].Color != playerColor)
+                return false;
             var dx = new int[2];
             var dy = new int[2];
             if (playerColor == Color.White)
@@ -54,7 +56,7 @@ namespace checkers
                 if (InField(new Point(turn.From.X + dx[i], turn.From.Y + dy[i])))
                     if (field[turn.From.X + dx[i], turn.From.Y + dy[i]] == null)
                     {
-                        var decr = GetDecreasedDim(dx[i], dy[i]);
+                        var decr = GetNextFreePlace(dx[i], dy[i]);
                         if (field[turn.From.X + decr.X, turn.From.Y + decr.Y] != null &&
                             field[turn.From.X + decr.X, turn.From.Y + decr.Y].Color != playerColor)//ламповая проверка на возможность атаки
                             return true;
@@ -91,10 +93,49 @@ namespace checkers
                                     field[free.X, free.Y] == null)
                                     ans.Add(new Move(from, free));
                             }
+            AddBindingForQueens(field, ans, playerColor);
             return ans;
         }
 
-        private Point GetDecreasedDim(int x, int y)
+        public void AddBindingForQueens(Checker[,] field, HashSet<Move> moves, Color playerColor)
+        {
+            var dx = new int[] { 1, -1, 1, -1 };
+            var dy = new int[] { -1, -1, 1, 1 };
+            for (var x = 0; x < 8; x++)
+                for (var y = 0; y < 8; y++)
+                    if (field[x,y] != null && field[x,y].IsQueen && field[x,y].Color == playerColor)
+                    {
+                        for (var delta = 1; delta < 8; delta++)
+                            for (var i = 0; i < 4; i++)
+                                if(InField(new Point(x + dx[i]*delta, y + dy[i]*delta)))
+                                    if (field[x + dx[i]*delta, y + dy[i]*delta] != null)
+                                        if(field[x + dx[i]*delta, y + dy[i]*delta].Color != playerColor)
+                                        {
+                                            var from = new Point(x,y);
+                                            var to = new Point(x + dx[i]*delta, y + dy[i]*delta);
+                                            var move = new Move(from, to);
+                                            AddToHashset(moves, dx[i], dy[i], move, field);
+                                        }
+                    }
+
+        }
+
+        private void AddToHashset (HashSet<Move> moves, int dx, int dy, Move enemy, Checker[,] field)
+        {
+            var x = enemy.To.X;
+            var y = enemy.To.Y;
+            do
+            {
+                x += dx;
+                y += dy;
+                if (InField(new Point(x, y)))
+                    if (field[x, y] == null)
+                    moves.Add(new Move(new Point(enemy.From.X, enemy.From.Y), new Point(x, y)));
+            }
+            while (InField(new Point(x, y)));
+        }
+
+        private Point GetNextFreePlace(int x, int y)
         {
             var dx = x > 0 ? x - 1 : x + 1;
             var dy = y > 0 ? y - 1 : y + 1;
