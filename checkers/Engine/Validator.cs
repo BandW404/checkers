@@ -8,7 +8,7 @@ namespace checkers
 {
     public class Validator
     {
-        public bool IsCorrectMove(List<Move> moves, Checker[,] field, Color playerColor) //void + exceptions.
+        public void IsCorrectMove(List<Move> moves, Checker[,] field, Color playerColor) //void + exceptions.
         {
             var result = true;
             foreach (var turn in moves)
@@ -16,7 +16,7 @@ namespace checkers
                 {
                     var bindingMoves = GetBindingMoves(field, playerColor);
                     if (bindingMoves.Count != 0 && !bindingMoves.Contains(turn))
-                        return false;
+                        throw new NotImplementedException();
                     if (!field[turn.From.X, turn.From.Y].IsQueen)
                         result &= IsCheckerTurnCorrect(field, playerColor, turn);
                     else
@@ -25,7 +25,7 @@ namespace checkers
                         MakeMove(field, turn);
                 }
                 else break;
-            return result;
+            throw new NotImplementedException();
         }
 
         private bool IsCheckerTurnCorrect(Checker[,] field, Color playerColor, Move turn)
