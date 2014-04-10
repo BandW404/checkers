@@ -42,10 +42,10 @@ namespace checkers
             var c = field[4, 4] == null;
             Assert.AreEqual(a && b && c, true);
         }
-        void TwoSimpleCheckersTest(List<Move> moves, Color color, bool answer)
+        void Test(List<Move> moves, Color color, bool answer, string mapname)
         {
             var validator = new Validator();
-            var field = GetMapFrom("Tests1.txt");
+            var field = GetMapFrom(mapname);
             Assert.AreEqual(validator.IsCorrectMove(moves, field, color), answer);
         }
         [TestMethod]
@@ -53,28 +53,84 @@ namespace checkers
         {
             var moves = new List<Move>();
             moves.Add(new Move(new Point(2, 2), new Point(1, 3)));
-            TwoSimpleCheckersTest(moves, Color.Black, false);
+            Test(moves, Color.Black, false, "Tests1.txt");
         }
         [TestMethod]
         public void MustAttackBlackTrue()
         {
             var moves = new List<Move>();
             moves.Add(new Move(new Point(2, 2), new Point(4, 4)));
-            TwoSimpleCheckersTest(moves, Color.Black, true);
+            Test(moves, Color.Black, true, "Tests1.txt");
         }
         [TestMethod]
         public void MustAttackWhiteTrue()
         {
             var moves = new List<Move>();
             moves.Add(new Move(new Point(3, 3), new Point(1, 1)));
-            TwoSimpleCheckersTest(moves, Color.White, true);
+            Test(moves, Color.White, true, "Tests1.txt");
         }
         [TestMethod]
-        public void MoveNotYourOwn()
+        public void MoveNotYourOwn() //пробую сходить не своей фигурой
         {
             var moves = new List<Move>();
             moves.Add(new Move(new Point(3, 3), new Point(1, 1)));
-            TwoSimpleCheckersTest(moves, Color.Black, false);
+            Test(moves, Color.Black, false, "Tests1.txt");
+        }
+        [TestMethod]
+        public void QueenMustAttackWhiteTrue() //пробую верно срубить королевой
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(1, 1), new Point(7, 7)));
+            Test(moves, Color.White, true, "Tests2.txt");
+        }
+        [TestMethod]
+        public void QueenMustAttackBlackTrue()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(6, 6), new Point(0, 0)));
+            Test(moves, Color.Black, true, "Tests2.txt");
+        }
+        [TestMethod]
+        public void QueenMustAttackWhiteFalse()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(1, 1), new Point(4, 4)));
+            Test(moves, Color.White, false, "Tests2.txt");
+        }
+        [TestMethod]
+        public void QueenMustAttackBlackFalse()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(6, 6), new Point(5, 7)));
+            Test(moves, Color.Black, false, "Tests2.txt");
+        }
+        [TestMethod] //?
+        public void NormalMoveWhite()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(6, 6), new Point(5, 5)));
+            Test(moves, Color.White, true, "Tests3.txt");
+        }
+        [TestMethod]
+        public void NormalMoveBlack()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(1, 1), new Point(0, 2)));
+            Test(moves, Color.Black, true, "Tests3.txt");
+        }
+        [TestMethod]
+        public void MoveBackBlackFalse()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(1, 1), new Point(0, 0)));
+            Test(moves, Color.Black, false, "Tests3.txt");
+        }
+        [TestMethod]
+        public void MoveBackWhiteFalse()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(6, 6), new Point(5, 7)));
+            Test(moves, Color.White, false, "Tests3.txt");
         }
     }
 }
