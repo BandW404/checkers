@@ -34,6 +34,15 @@ namespace checkers
             return map;
         }
         [TestMethod]
+        public void HashTest()
+        {
+            var moves = new HashSet<Move>();
+            var field = GetMapFrom("Tests5.txt");
+            var valid = new Validator();
+            valid.AddBindingForQueens(field, moves, Color.White);
+            Assert.AreEqual(0, moves.Count);
+        }
+        [TestMethod]
         public void CheckCorrectMap()
         {
             var field = GetMapFrom("Tests1.txt");
