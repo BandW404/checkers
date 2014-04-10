@@ -39,7 +39,7 @@ namespace checkers
             var moves = new HashSet<Move>();
             var field = GetMapFrom("Tests5.txt");
             var valid = new Validator();
-            valid.AddBindingForQueens(field, moves, Color.White);
+            moves = valid.GetBindingMoves(field, Color.White);
             Assert.AreEqual(0, moves.Count);
         }
         [TestMethod]
