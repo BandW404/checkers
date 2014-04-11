@@ -10,11 +10,19 @@ namespace checkers
     {
         public void IsCorrectMove(List<Move> moves, Checker[,] field, Color playerColor) //void + exceptions.
         {
+            var firstMove = true;
             var result = true;
+            var start = new Point(-1,-1);
             foreach (var turn in moves)
-                if (result)
+                if (result && InField(new Point(turn.From.X, turn.From.Y)) && InField(new Point(turn.To.X, turn.To.Y)) && field[turn.From.X, turn.From.Y] != null)
                 {
+                    if (start.X == -1 && start.Y == -1)
+                        start = turn.From;
+                    if (start != turn.From)
+                        throw new NotImplementedException();
                     var bindingMoves = GetBindingMoves(field, playerColor);
+                    if (bindingMoves.Count == 0 && !firstMove)
+                        throw new NotImplementedException();
                     if (bindingMoves.Count != 0 && !bindingMoves.Contains(turn))
                         throw new NotImplementedException();
                     if (!field[turn.From.X, turn.From.Y].IsQueen)
@@ -22,8 +30,13 @@ namespace checkers
                     else
                         result &= IsQuennTurnCorrect(field, playerColor, turn);
                     if (result)
+                    {
                         MakeMove(field, turn);
+                        firstMove = false;
+                        start = turn.To;
+                    }
                 }
+                else result = false;
                 if (!result) throw new NotImplementedException();
             return;
         }
@@ -48,7 +61,7 @@ namespace checkers
                 if (InField(new Point(turn.From.X + dx[i], turn.From.Y + dy[i])))
                     if (field[turn.From.X + dx[i], turn.From.Y + dy[i]] == null &&
                         turn.From.X + dx[i] == turn.To.X && turn.From.Y + dy[i] == turn.To.Y)
-                        return true;//ламповая проверка на возожность хода 
+                            return true;//ламповая проверка на возожность хода 
             
             dx = new int[] { 2, -2, 2, -2 };
             dy = new int[] { -2, -2, 2, 2 };
@@ -58,8 +71,8 @@ namespace checkers
                     {
                         var decr = GetNextFreePlace(dx[i], dy[i]);
                         if (field[turn.From.X + decr.X, turn.From.Y + decr.Y] != null &&
-                            field[turn.From.X + decr.X, turn.From.Y + decr.Y].Color != playerColor)//ламповая проверка на возможность атаки
-                            return true;
+                            field[turn.From.X + decr.X, turn.From.Y + decr.Y].Color != playerColor)
+                                return true;
                     }
             return false;
         }
@@ -167,8 +180,6 @@ namespace checkers
 
         private Tuple<int,int> GetDelta(Move move)
         {
-            var dx = 0;
-            var dy = 0;
             Tuple<int,int> ans = new Tuple<int,int>(0,0);
             if (move.To.X > move.From.X && move.To.Y > move.From.Y) ans = new Tuple<int, int>(1, 1);
             if (move.To.X > move.From.X && move.To.Y < move.From.Y) ans = new Tuple<int, int>(1, -1);
@@ -208,6 +219,8 @@ namespace checkers
                     if (move.To.X == x + dx * i && move.To.Y == y + dy * i)
                     {
                         field[x + dx * i, y + dy * i] = checker;
+                        if (y + dy * i == 0 && checker.Color == Color.White) field[x + dx * i, y + dy * i] = new Checker(checker.Color, true);
+                        if (y + dy * i == 7 && checker.Color == Color.Black) field[x + dx * i, y + dy * i] = new Checker(checker.Color, true);
                         break;
                     }
 
