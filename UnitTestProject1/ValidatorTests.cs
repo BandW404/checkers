@@ -330,5 +330,20 @@ namespace checkers
             moves.Add(new Move(new Point(5, 0), new Point(7, 2)));
             Test(moves, Color.White, false, "Tests10.txt");
         }
+        [TestMethod]
+        public void DoubleMoveBlack()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(1, 1), new Point(2, 2)));
+            moves.Add(new Move(new Point(3, 1), new Point(4, 2)));
+            Test(moves, Color.Black, false, "Tests11.txt");
+        }
+        [TestMethod]
+        public void DoubleMoveBlackTrue()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(3, 1), new Point(4, 2)));
+            Test(moves, Color.Black, true, "Tests11.txt");
+        }
     }
 }
