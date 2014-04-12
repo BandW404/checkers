@@ -351,7 +351,13 @@ namespace checkers
             var moves = new List<Move>();
             moves.Add(new Move(new Point(0, 5), new Point(1, 4)));
             Test(moves, Color.White, true, "Tests12.txt");
-
+        }
+        [TestMethod]
+        public void MustDoubleAttack()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(1, 1), new Point(3, 3)));
+            Test(moves, Color.White, true, "Tests8.txt");
         }
     }
 }
