@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace checkers
 {
@@ -63,17 +64,12 @@ namespace checkers
             {
                 var rand = Program.Rand.Next(0, listOfMyCheckersWhoCanMove.Count);
                 var move = listOfMyCheckersWhoCanMove[rand];
-                //var var1 = new Point(from.X + 1, from.Y + way);
-                //var var2 = new Point(from.X - 1, from.Y + way);
-                   //if ( field[var1.X, var1.Y] == null )
-                    //answer.Add(new Move(from, var1));
-                //else
                 answer.Add(move);
                 return answer;
             }
-            throw new Exception("draw");
-            //Game.GameOver(Color);
-            //return answer; // иначе возвращаем пустой (?)
+            MessageBox.Show(Color.ToString() + " lose");
+            Environment.Exit(0);
+            return null;
         }
     }
 }

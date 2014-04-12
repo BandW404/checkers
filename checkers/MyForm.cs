@@ -35,10 +35,10 @@ namespace checkers
             Text = "Checkers";
             timer.Tick += TimerTick;
             tickCount = 0;
-            this.KeyUp += MyForm_KeyUp;
+            this.KeyDown += MyForm_KeyDown;
         }
 
-        void MyForm_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        void MyForm_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
             {
