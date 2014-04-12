@@ -50,7 +50,7 @@ namespace checkers
             if (playerColor == Color.White)
             {
                 dx = new int[] { 1, -1 };
-                dy = new int[] { 1, -1 };
+                dy = new int[] { -1, -1 };
             }
             else
             {
