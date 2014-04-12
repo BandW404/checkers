@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,31 +24,32 @@ namespace checkers
             Func<Point, bool> InField = (point => point.X < 8 && point.X >= 0 && point.Y < 8 && point.Y >= 0);
             var answer = new List<Move>();
             var valid = new Validator();
-            var way = (Color == Color.White)?-1:1;
+            var way = (Color == Color.White) ? -1 : 1;
             var listOfMyCheckersWhoCanMove = new List<Move>();
             var bindingMoves = valid.GetBindingMoves(field, Color);
-            if (bindingMoves.Count > 0) //ходим сначала рандомной фигурой из списка, затем ищем возможные ходы  дальше и ходим. иначе конец хода.
+            if (bindingMoves.Count > 0)
             {
+                var tempMap = new Checker[8, 8];
+                for (var i = 0; i < 8; i++)
+                    for (var j = 0; j < 8; j++)
+                        if (field[i, j] != null)
+                            tempMap[i, j] = new Checker(field[i, j].Color, field[i, j].IsQueen);
                 answer.Add(bindingMoves.ToArray()[Program.Rand.Next(0, bindingMoves.Count)]);
-                var point = answer[0].To;
-                while (true)
-                    for (var di = -1; di < 2; di += 2)
-                        for (var dj = -1; dj < 2; dj += 2)
-                        {
-                            var from = new Point(point.X, point.Y);
-                            var enemy = new Point(point.X + di, point.Y + dj);
-                            var free = new Point(point.X + di * 2, point.Y + dj * 2);
-                            var move = new Move(from, free);
-                            if (InField(enemy) &&
-                                field[enemy.X, enemy.Y] != null &&
-                                field[enemy.X, enemy.Y].Color != Color &&
-                                InField(free) &&
-                                field[free.X, free.Y] == null &&
-                                !answer.Contains(move))
-                                answer.Add(new Move(from, free));
-                            else
-                                return answer;
-                        }
+                valid.MakeMove(tempMap, answer[0]);
+                var from = answer[0].To;
+                var array = valid.GetBindingMoves(tempMap, Color).Where(x => x.From == from).ToArray();
+                var counter = array.Length;
+                while (counter > 0)
+                {
+                    var rand = Program.Rand.Next(0, counter);
+                    var move = new Move(from, array[rand].To);
+                    answer.Add(move);
+                    valid.MakeMove(tempMap, move);
+                    from = move.To;
+                    array = valid.GetBindingMoves(tempMap, Color).Where(x => x.From == from).ToArray();
+                    counter = array.Length;
+                }
+                return answer;
             }
             for (var i = 0; i < 8; i++) // составляем список всех возможных фигур, которые могут ходить
                 for (var j = 0; j < 8; j++)
