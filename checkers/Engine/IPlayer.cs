@@ -12,6 +12,6 @@ namespace checkers
         {
             get;
         }
-        List<Move> MakeTurn(MoveInfo moveInfo);
+        List<Move> MakeTurn(Checker[,] field);
     }
 }

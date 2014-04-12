@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace checkers
 {
-    public class MoveInfo
+    public class MoveInfo1
     {
-        public MoveInfo(Checker[,] field)
+        public MoveInfo1(Checker[,] field)
         {
             this.Field = field;
             //Moves = new List<Move>();

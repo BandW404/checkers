@@ -56,13 +56,12 @@ namespace checkers
             //            field[i * 2, 7 - j] = new Checker(Color.White, false);
             //            field[i * 2 + 1, j] = new Checker(Color.Black, false);
             //        }
-            var moveInfo = new MoveInfo(field);
             List<Move> listOfMoves;
             while (true)
             {
-                listOfMoves = whitePlayer.MakeTurn(moveInfo);
+                listOfMoves = whitePlayer.MakeTurn(field);
                 validator.IsCorrectMove(listOfMoves, field, Color.White);
-                listOfMoves = blackPlayer.MakeTurn(moveInfo);
+                listOfMoves = blackPlayer.MakeTurn(field);
                 validator.IsCorrectMove(listOfMoves, field, Color.Black);
             }
         }

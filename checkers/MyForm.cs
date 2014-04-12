@@ -13,7 +13,6 @@ namespace checkers
 {
     public class MyForm : Form
     {
-        Timer timer;
         const int ElementSize = 64;
         List<Move> moves;
         Player white = new Player(Color.White);
@@ -29,11 +28,8 @@ namespace checkers
             validator = new Validator();
             StartPosition = FormStartPosition.CenterScreen;
             ClientSize = new Size(ElementSize * 8, ElementSize * 8);
-            timer = new Timer();
-            timer.Interval = 300;
             DoubleBuffered = true;
             Text = "Checkers";
-            timer.Tick += TimerTick;
             tickCount = 0;
             this.KeyDown += MyForm_KeyDown;
         }
@@ -44,12 +40,12 @@ namespace checkers
             {
                 if (tickCount % 2 == 0)
                 {
-                    moves = white.MakeTurn(new MoveInfo(field));
+                    moves = white.MakeTurn(field);
                     validator.IsCorrectMove(moves, field, Color.White);
                 }
                 else
                 {
-                    moves = black.MakeTurn(new MoveInfo(field));
+                    moves = black.MakeTurn(field);
                     validator.IsCorrectMove(moves, field, Color.Black);
                 }
                 tickCount++;
@@ -87,24 +83,6 @@ namespace checkers
                     }
 
                 }
-
-        }
-
-        void TimerTick(object sender, EventArgs args)
-        {
-            //if (Keyboard.IsKeyDown(Key.Space))
-                if (tickCount % 2 == 0)
-                {
-                    moves = white.MakeTurn(new MoveInfo(field));
-                    validator.IsCorrectMove(moves, field, Color.White);
-                }
-                else
-                {
-                    moves = black.MakeTurn(new MoveInfo(field));
-                    validator.IsCorrectMove(moves, field, Color.Black);
-                }
-                tickCount++;
-            Invalidate();
         }
     }
 }

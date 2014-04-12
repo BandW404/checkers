@@ -19,9 +19,8 @@ namespace checkers
             private set;
         }
 
-        public List<Move> MakeTurn(MoveInfo moveInfo)
+        public List<Move> MakeTurn(Checker[,] field)
         {
-            var field = moveInfo.Field;
             Func<Point, bool> InField = (point => point.X < 8 && point.X >= 0 && point.Y < 8 && point.Y >= 0);
             var answer = new List<Move>();
             var valid = new Validator();
