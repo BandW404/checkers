@@ -13,6 +13,7 @@ namespace checkers
             var firstMove = true;
             var result = true;
             var start = new Point(-1,-1);
+            var attack = GetBindingMoves(field, playerColor).Count != 0;
             foreach (var turn in moves)
                 if (result && InField(new Point(turn.From.X, turn.From.Y)) && InField(new Point(turn.To.X, turn.To.Y)) && field[turn.From.X, turn.From.Y] != null)
                 {
@@ -35,10 +36,21 @@ namespace checkers
                         firstMove = false;
                         start = turn.To;
                     }
+
                 }
                 else result = false;
                 if (!result) throw new NotImplementedException();
+            var finalTest = GetBindingMoves(field,playerColor);
+            if (IsInHashSet(finalTest, start) && attack)
+                throw new NotImplementedException();
             return;
+        }
+
+        private bool IsInHashSet(HashSet<Move> hash, Point hero)
+        {
+            foreach (var e in hash)
+                if (e.From == hero) return true;
+            return false;
         }
 
         private bool IsCheckerTurnCorrect(Checker[,] field, Color playerColor, Move turn)
@@ -165,12 +177,13 @@ namespace checkers
                                 noEnemy = false;
                         }
                         if (field[x+dx[i]*delta, y+dy[i]*delta] != null)
-                            if ((field[x+dx[i]*delta, y+dy[i]*delta].Color != playerColor || enemyFound) && noEnemy
-                                && field[x+dx[i]*(delta+1), y+dy[i]*(delta+1)] == null)
-                            {
-                                ans.Add(new Move(new Point(x,y), new Point(x+dx[i]*(delta+1), y+dy[i]*(delta+1))));
-                                enemyFound = true;
-                            }
+                            if (InField(new Point(x + dx[i] * (delta + 1), y + dy[i] * (delta + 1))))
+                                if ((field[x+dx[i]*delta, y+dy[i]*delta].Color != playerColor || enemyFound) && noEnemy
+                                    && field[x+dx[i]*(delta+1), y+dy[i]*(delta+1)] == null)
+                                {
+                                    ans.Add(new Move(new Point(x,y), new Point(x+dx[i]*(delta+1), y+dy[i]*(delta+1))));
+                                    enemyFound = true;
+                                }
                         if (enemyFound && field[x + dx[i] * delta, y + dy[i] * delta] == null)
                             ans.Add(new Move(new Point(x, y), new Point(x + dx[i] * (delta), y + dy[i] * (delta))));
                         }
