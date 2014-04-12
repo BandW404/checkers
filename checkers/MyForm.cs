@@ -25,6 +25,8 @@ namespace checkers
 
         public MyForm(Checker[,] field)
         {
+            //to make a turn mark your fields to go one by one and press "T". To simulate a game
+            //press space button. Happy gaming, your BandW404 team!
             this.field = field;
             validator = new Validator();
             StartPosition = FormStartPosition.CenterScreen;
