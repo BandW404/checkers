@@ -217,7 +217,7 @@ namespace checkers
             return new Point(dx, dy);
         }
 
-        private void MakeMove(Checker[,] field, Move move)
+        public void MakeMove(Checker[,] field, Move move)
         {
             var delta = GetDelta(move);
             var dx = delta.Item1;
