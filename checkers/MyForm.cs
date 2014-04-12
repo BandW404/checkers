@@ -15,8 +15,9 @@ namespace checkers
     {
         Timer timer;
         const int ElementSize = 64;
-        Bitmap bitmapBlack;
-        Bitmap bitmapWhite;
+        List<Move> moves;
+        Player white = new Player(Color.White);
+        Player black = new Player(Color.Black);
         int tickCount;
         Checker[,] field;
         Validator validator;
@@ -29,11 +30,12 @@ namespace checkers
             StartPosition = FormStartPosition.CenterScreen;
             ClientSize = new Size(ElementSize * 8, ElementSize * 8);
             timer = new Timer();
-            timer.Interval = 3000;
+            timer.Interval = 300;
             DoubleBuffered = true;
             Text = "Checkers";
             timer.Tick += TimerTick;
             timer.Start();
+            tickCount = 0;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -49,12 +51,22 @@ namespace checkers
                         (i + 1) * ElementSize,
                         (j + 1) * ElementSize);
                     if (field[i, j] != null)
+                    {
                         e.Graphics.FillEllipse(
-                            field[i, j].Color == Color.White ? Brushes.White : Brushes.Black, i * ElementSize + 5, j * ElementSize + 5, ElementSize - 10, ElementSize - 10);
-                            //i * ElementSize,
-                            //j * ElementSize,
-                            //(i + 1) * ElementSize,
-                            //(j + 1) * ElementSize);
+                            field[i, j].Color == Color.White ? Brushes.White : Brushes.Black,
+                            i * ElementSize + 5,
+                            j * ElementSize + 5,
+                            ElementSize - 10,
+                            ElementSize - 10);
+                        if (field[i, j].IsQueen)
+                            e.Graphics.FillEllipse(
+                            Brushes.Gold,
+                            i * ElementSize + 20,
+                            j * ElementSize + 20,
+                            ElementSize - 40,
+                            ElementSize - 40);
+                    }
+
                 }
 
         }
@@ -62,12 +74,17 @@ namespace checkers
         void TimerTick(object sender, EventArgs args)
         {
             if (Keyboard.IsKeyDown(Key.Space))
-            {
-                var moves = new List<Move>();
-                moves.Add(new Move(new Point(0, 5), new Point(1, 4)));
-                validator.IsCorrectMove(moves, field, Color.White);
-                
-            }
+                if (tickCount % 2 == 0)
+                {
+                    moves = white.MakeTurn(new MoveInfo(field));
+                    validator.IsCorrectMove(moves, field, Color.White);
+                }
+                else
+                {
+                    moves = black.MakeTurn(new MoveInfo(field));
+                    validator.IsCorrectMove(moves, field, Color.Black);
+                }
+                tickCount++;
             Invalidate();
         }
     }

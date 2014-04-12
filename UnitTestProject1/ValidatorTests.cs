@@ -37,7 +37,7 @@ namespace checkers
         public void HashTest()
         {
             var moves = new HashSet<Move>();
-            var field = GetMapFrom("Tests05.txt");
+            var field = GetMapFrom("Tests12.txt");
             var valid = new Validator();
             moves = valid.GetBindingMoves(field, Color.White);
             Assert.AreEqual(0, moves.Count);
@@ -351,6 +351,7 @@ namespace checkers
             var moves = new List<Move>();
             moves.Add(new Move(new Point(0, 5), new Point(1, 4)));
             Test(moves, Color.White, true, "Tests12.txt");
+
         }
     }
 }

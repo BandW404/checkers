@@ -25,7 +25,7 @@ namespace checkers
             var answer = new List<Move>();
             var valid = new Validator();
             var way = (Color == Color.White)?-1:1;
-            var listOfMyCheckersWhoCanMove = new List<Point>();
+            var listOfMyCheckersWhoCanMove = new List<Move>();
             var bindingMoves = valid.GetBindingMoves(field, Color);
             if (bindingMoves.Count > 0) //ходим сначала рандомной фигурой из списка, затем ищем возможные ходы  дальше и ходим. иначе конец хода.
             {
@@ -53,19 +53,22 @@ namespace checkers
             for (var i = 0; i < 8; i++) // составляем список всех возможных фигур, которые могут ходить
                 for (var j = 0; j < 8; j++)
                     if (field[i, j] != null && field[i, j].Color == Color)
-                        if (InField(new Point(i + 1, j + way)) && field[i + 1, j + way] == null ||
-                            InField(new Point(i - 1, j + way)) && field[i - 1, j + way] == null)
-                            listOfMyCheckersWhoCanMove.Add(new Point(i, j));
+                    {
+                        if (InField(new Point(i + 1, j + way)) && field[i + 1, j + way] == null)
+                            listOfMyCheckersWhoCanMove.Add(new Move(new Point(i, j), new Point(i + 1, j + way)));
+                        if (InField(new Point(i - 1, j + way)) && field[i - 1, j + way] == null)
+                            listOfMyCheckersWhoCanMove.Add(new Move(new Point(i, j), new Point(i - 1, j + way)));
+                    }
             if (listOfMyCheckersWhoCanMove.Count > 0) //если в этом списке что-то есть -- добавляем рандомный эл-т и заканчиваем ход
             {
                 var rand = Program.Rand.Next(0, listOfMyCheckersWhoCanMove.Count);
-                var from = listOfMyCheckersWhoCanMove[rand];
-                var var1 = new Point(from.X + 1, from.Y + way);
-                var var2 = new Point(from.X - 1, from.Y + way);
-                if ( field[var1.X, var1.Y] == null )
-                    answer.Add(new Move(from, var1));
-                else
-                    answer.Add(new Move(from, var2));
+                var move = listOfMyCheckersWhoCanMove[rand];
+                //var var1 = new Point(from.X + 1, from.Y + way);
+                //var var2 = new Point(from.X - 1, from.Y + way);
+                   //if ( field[var1.X, var1.Y] == null )
+                    //answer.Add(new Move(from, var1));
+                //else
+                answer.Add(move);
                 return answer;
             }
             throw new Exception("draw");
