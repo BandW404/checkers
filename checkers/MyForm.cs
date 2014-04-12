@@ -34,8 +34,27 @@ namespace checkers
             DoubleBuffered = true;
             Text = "Checkers";
             timer.Tick += TimerTick;
-            timer.Start();
             tickCount = 0;
+            this.KeyUp += MyForm_KeyUp;
+        }
+
+        void MyForm_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Space)
+            {
+                if (tickCount % 2 == 0)
+                {
+                    moves = white.MakeTurn(new MoveInfo(field));
+                    validator.IsCorrectMove(moves, field, Color.White);
+                }
+                else
+                {
+                    moves = black.MakeTurn(new MoveInfo(field));
+                    validator.IsCorrectMove(moves, field, Color.Black);
+                }
+                tickCount++;
+                Invalidate();
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -73,7 +92,7 @@ namespace checkers
 
         void TimerTick(object sender, EventArgs args)
         {
-            if (Keyboard.IsKeyDown(Key.Space))
+            //if (Keyboard.IsKeyDown(Key.Space))
                 if (tickCount % 2 == 0)
                 {
                     moves = white.MakeTurn(new MoveInfo(field));
