@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace checkers
 {
     public class Program
     {
         public static Random Rand = new Random();
+        [STAThread]
         public static void Main(string[] args)
         {
             //hello
@@ -29,6 +31,8 @@ namespace checkers
             //var q = new List<Move>();
             //q.Add(a);
             //Console.Write(q.Contains(b));
+            
+            Application.Run(new MyForm(new Game().CreateMap()));
         }
     }
 }

@@ -345,5 +345,12 @@ namespace checkers
             moves.Add(new Move(new Point(3, 1), new Point(4, 2)));
             Test(moves, Color.Black, true, "Tests11.txt");
         }
+        [TestMethod]
+        public void DrawMoveTest()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(0, 5), new Point(1, 4)));
+            Test(moves, Color.White, true, "Tests12.txt");
+        }
     }
 }
