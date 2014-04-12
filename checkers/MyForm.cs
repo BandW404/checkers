@@ -15,12 +15,13 @@ namespace checkers
     {
         const int ElementSize = 64;
         List<Move> moves;
+        List<Point> playerMoves = new List<Point>();
         Player white = new Player(Color.White);
         Player black = new Player(Color.Black);
         int tickCount;
         Checker[,] field;
+        Point turn = new Point(-1,-1);
         Validator validator;
-        
 
         public MyForm(Checker[,] field)
         {
@@ -32,6 +33,15 @@ namespace checkers
             Text = "Checkers";
             tickCount = 0;
             this.KeyDown += MyForm_KeyDown;
+            this.MouseClick += MyForm_MouseClick;
+        }
+
+        void MyForm_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            var x = e.X / 64;
+            var y = e.Y / 64;
+            playerMoves.Add(new Point(x, y));
+            //throw new NotImplementedException();
         }
 
         void MyForm_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -51,11 +61,35 @@ namespace checkers
                 tickCount++;
                 Invalidate();
             }
+
+            if (e.KeyCode == Keys.T)
+            {
+                var temp = new Point(-1,-1);
+                var pMoves = new List<Move>();
+                for (var i = 0; i < playerMoves.Count; i++)
+                {
+                    if (temp.X == -1)
+                    {
+                        temp = playerMoves[i];
+                        continue;
+                    }
+                    else
+                    {
+                        pMoves.Add(new Move(temp, playerMoves[i]));
+                        temp = playerMoves[i];
+                    }
+                }
+                validator.IsCorrectMove(pMoves, field, Color.White);
+                moves = black.MakeTurn(field);
+                validator.IsCorrectMove(moves, field, Color.Black);
+                playerMoves = new List<Point>();
+                turn.X = -1;
+                Invalidate();
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
             for (var i = 0; i < 8; i++)
                 for (var j = 0; j < 8; j++)
                 {
@@ -81,7 +115,6 @@ namespace checkers
                             ElementSize - 40,
                             ElementSize - 40);
                     }
-
                 }
         }
     }
