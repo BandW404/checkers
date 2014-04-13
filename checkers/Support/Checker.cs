@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace checkers
+namespace Checkers
 {
     public enum Color {Black, White};
     public class Checker

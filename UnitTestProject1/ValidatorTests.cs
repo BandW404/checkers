@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Collections.Generic;
 
-namespace checkers
+namespace Checkers
 {
     [TestClass]
     public class ValidatorTests

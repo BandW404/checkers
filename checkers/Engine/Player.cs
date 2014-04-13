@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace checkers
+namespace Checkers
 {
     public class Player : IPlayer
     {
@@ -59,6 +59,10 @@ namespace checkers
                             listOfMyCheckersWhoCanMove.Add(new Move(new Point(i, j), new Point(i + 1, j + way)));
                         if (InField(new Point(i - 1, j + way)) && field[i - 1, j + way] == null)
                             listOfMyCheckersWhoCanMove.Add(new Move(new Point(i, j), new Point(i - 1, j + way)));
+                        if (InField(new Point(i + 1, j - way)) && field[i + 1, j - way] == null && field[i, j].IsQueen)
+                            listOfMyCheckersWhoCanMove.Add(new Move(new Point(i, j), new Point(i + 1, j - way)));
+                        if (InField(new Point(i - 1, j - way)) && field[i - 1, j - way] == null && field[i, j].IsQueen)
+                            listOfMyCheckersWhoCanMove.Add(new Move(new Point(i, j), new Point(i - 1, j - way)));
                     }
             if (listOfMyCheckersWhoCanMove.Count > 0) //если в этом списке что-то есть -- добавляем рандомный эл-т и заканчиваем ход
             {

@@ -7,7 +7,7 @@
     <ProjectGuid>{3E70F0A1-D0A3-4BEF-8106-CE5FC44C1E3A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>checkers</RootNamespace>
+    <RootNamespace>Checkers</RootNamespace>
     <AssemblyName>checkers</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -60,7 +60,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\Move.cs" />
-    <Compile Include="Support\MoveInfo.cs" />
     <Compile Include="Support\Point.cs" />
   </ItemGroup>
   <ItemGroup>

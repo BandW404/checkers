@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace checkers
+namespace Checkers
 {
     public class MyForm : Form
     {
@@ -22,11 +22,13 @@ namespace checkers
         Checker[,] field;
         Point turn = new Point(-1,-1);
         Validator validator;
+        int turnCount;
 
         public MyForm(Checker[,] field)
         {
             //to make a turn mark your fields to go one by one and press "T". To simulate a game
             //press space button. Happy gaming, your BandW404 team!
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.field = field;
             validator = new Validator();
             StartPosition = FormStartPosition.CenterScreen;
@@ -43,13 +45,17 @@ namespace checkers
             var x = e.X / 64;
             var y = e.Y / 64;
             playerMoves.Add(new Point(x, y));
-            //throw new NotImplementedException();
         }
 
         void MyForm_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
             {
+                if (tickCount > 200)
+                {
+                    MessageBox.Show("draw, too long game");
+                    Environment.Exit(0);
+                }
                 if (tickCount % 2 == 0)
                 {
                     moves = white.MakeTurn(field);
@@ -92,6 +98,7 @@ namespace checkers
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            var pen = new Pen(Brushes.Gold, 5);
             for (var i = 0; i < 8; i++)
                 for (var j = 0; j < 8; j++)
                 {
@@ -110,12 +117,11 @@ namespace checkers
                             ElementSize - 10,
                             ElementSize - 10);
                         if (field[i, j].IsQueen)
-                            e.Graphics.FillEllipse(
-                            Brushes.Gold,
-                            i * ElementSize + 20,
-                            j * ElementSize + 20,
-                            ElementSize - 40,
-                            ElementSize - 40);
+                            e.Graphics.DrawEllipse(pen,
+                            i * ElementSize + 5,
+                            j * ElementSize + 5,
+                            ElementSize - 10,
+                            ElementSize - 10);
                     }
                 }
         }

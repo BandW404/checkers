@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace checkers
+namespace Checkers
 {
     static class LinqExtention
     {
@@ -20,7 +20,7 @@ namespace checkers
         Checker[,] field;
         IPlayer whitePlayer;
         IPlayer blackPlayer;
-        Validator validator; // убрать паблики
+        Validator validator;
 
         public Checker[,] CreateMap()
         {
@@ -44,18 +44,6 @@ namespace checkers
             validator = new Validator();
             whitePlayer = new Player(Color.White);
             blackPlayer = new Player(Color.Black);
-            //for (var i = 0; i < 4; i++)
-            //    for (var j = 0; j < 3; j++)
-            //        if (j == 1)
-            //        {
-            //            field[i * 2 + 1, 7 - j] = new Checker(Color.White, false);
-            //            field[i * 2, j] = new Checker(Color.Black, false);
-            //        }
-            //        else
-            //        {
-            //            field[i * 2, 7 - j] = new Checker(Color.White, false);
-            //            field[i * 2 + 1, j] = new Checker(Color.Black, false);
-            //        }
             List<Move> listOfMoves;
             while (true)
             {

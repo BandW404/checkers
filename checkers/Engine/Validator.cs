@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace checkers
+namespace Checkers
 {
     public class Validator
     {
-        public void IsCorrectMove(List<Move> moves, Checker[,] field, Color playerColor) //void + exceptions.
+        public void IsCorrectMove(List<Move> moves, Checker[,] field, Color playerColor)
         {
             var firstMove = true;
             var result = true;
