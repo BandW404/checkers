@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Checkers
 {
@@ -71,8 +70,6 @@ namespace Checkers
                 answer.Add(move);
                 return answer;
             }
-            MessageBox.Show(Color.ToString() + " lose");
-            Environment.Exit(0);
             return null;
         }
     }
