@@ -10,6 +10,8 @@ namespace Checkers
     {
         public void IsCorrectMove(List<Move> moves, Checker[,] field, Color playerColor)
         {
+            if (moves == null)
+                throw new NotImplementedException("Player lost");
             var firstMove = true;
             var result = true;
             var start = new Point(-1,-1);
