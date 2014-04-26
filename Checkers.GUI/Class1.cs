@@ -8,5 +8,6 @@ namespace Checkers.GUI
 {
     public class Class1
     {
+        //formochka
     }
 }

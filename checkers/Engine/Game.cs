@@ -53,9 +53,9 @@ namespace Checkers
                 validator.IsCorrectMove(listOfMoves, field, Color.Black);
             }
         }
-        public static void GameOver(Color winner)
+        public static void GameOver(Color loser)
         {
-            Console.WriteLine(winner.ToString() + " WINS!!!");
+            Console.WriteLine(loser.ToString() + " lose");
             Environment.Exit(0);
         }
     }
