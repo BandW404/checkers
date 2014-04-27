@@ -11,7 +11,9 @@ namespace Checkers
         Color Color
         {
             get;
+            set;
         }
+
         List<Move> MakeTurn(Checker[,] field);
     }
 }

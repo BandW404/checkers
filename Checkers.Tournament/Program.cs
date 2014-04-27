@@ -35,12 +35,13 @@ namespace Checkers.Tournament
         public Color Color
         {
             get;
-            private set;
+            set;
         }
 
         public List<Move> MakeTurn(Checker[,] field)
         {
             process.StandardInput.WriteLine(serializer.Serialize(field)); // вместо эни строка филд
+            
             return (List<Move>)serializer.Deserialize(process.StandardOutput.ReadLine(), typeof(List<Move>)); // тут плеер сходил и вернул нам поле.
             //return null; //на самом деле возвращаете то что пришло из процесса
         }
