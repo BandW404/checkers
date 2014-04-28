@@ -33,11 +33,15 @@ namespace Checkers.Runner
             while (true)
             {
                 var str = Console.ReadLine();
-                throw new Exception(str);
+                if (str == null)
+                    Environment.Exit(0);
                 var field = Serializer.StringToField(str);
                 var moves = playerObject.MakeTurn(field);
                 if (moves == null || moves.Count == 0)
-                    throw new Exception(" game over ?");
+                {
+                    Console.WriteLine(color.ToString() + " LOSE");
+                    Environment.Exit(0);
+                }
                 var answer = Serializer.MovesToString(moves);
                 if (answer == null || answer == "")
                     throw new Exception("qqq");

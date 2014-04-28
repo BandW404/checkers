@@ -37,8 +37,8 @@ namespace Checkers
             DoubleBuffered = true;
             Text = "Checkers";
             tickCount = 0;
-            this.KeyDown += MyForm_KeyDown;
-            this.MouseClick += MyForm_MouseClick;
+            //this.KeyDown += MyForm_KeyDown;
+            //this.MouseClick += MyForm_MouseClick;
         }
 
         void MyForm_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -96,7 +96,11 @@ namespace Checkers
                 Invalidate();
             }
         }
-
+        void Update(Checker[,] field)
+        {
+            this.field = field;
+            Invalidate();
+        }
         protected override void OnPaint(PaintEventArgs e)
         {
             var pen = new Pen(Brushes.Gold, 5);

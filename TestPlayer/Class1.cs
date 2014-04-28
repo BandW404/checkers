@@ -68,15 +68,5 @@ namespace TestPlayer
             }
             return null;
         }
-
-        void IPlayer.Initialize(Color color)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<Move> IPlayer.MakeTurn(Checker[,] field)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

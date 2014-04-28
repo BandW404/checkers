@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace Checkers.Tournament
 {
@@ -24,7 +25,7 @@ namespace Checkers.Tournament
             process.StartInfo.UseShellExecute = false; //а может true
             process.StartInfo.RedirectStandardInput = true;
             process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.CreateNoWindow = true; // nado true, just for test bljad
+            process.StartInfo.CreateNoWindow = false; // nado true, just for test bljad
             process.Start();
 
         }
@@ -34,26 +35,35 @@ namespace Checkers.Tournament
             var fieldInString = Serializer.FieldToString(field);
             process.StandardInput.WriteLine(fieldInString); //  строка филд
             var movesInString = process.StandardOutput.ReadLine();
-            if (movesInString == null)
-                throw new Exception("nulla");
+            if (movesInString == "White LOSE" || movesInString == "Black LOSE")
+            {
+                Console.WriteLine(movesInString);
+                Environment.Exit(0);
+            }
             return Serializer.StringToMoves(movesInString); // тут плеер сходил и вернул нам поле.
             //return null; //на самом деле возвращаете то что пришло из процесса
         }
     }
 
 
-    class Program
+    public class Program
     {
+        //public static event Action<Checker[,]> update;
+        [STAThread]
         static void Main(string[] args)
         {
             var white = new MyRemotePlayer(args[0], Color.White);
             var black = new MyRemotePlayer(args[1], Color.Black);
             var validator = new Validator();
             var field = new Game().CreateMap();
+            Application.Run(new MyForm(field));
             while (true)
             {
                 validator.IsCorrectMove(white.MakeTurn(field), field, Color.White);
+                Application.Run(new MyForm(field));
                 validator.IsCorrectMove(black.MakeTurn(field), field, Color.Black);
+                //update(field);
+                Application.Run(new MyForm(field));
             }
 
 
