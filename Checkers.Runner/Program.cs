@@ -32,7 +32,9 @@ namespace Checkers.Runner
             //Console.WriteLine(playerObject.MakeTurn(new Game().CreateMap()).Count);
             while (true)
             {
-            var moves = playerObject.MakeTurn( (Checker[,])serializer.Deserialize(Console.ReadLine(), typeof(Checker[,])) );
+                var str = Console.ReadLine();
+                var field=(Checker[,])serializer.Deserialize(str, typeof(Checker[,]));
+                var moves=playerObject.MakeTurn( field);
             Console.WriteLine(serializer.Serialize(moves));
             }
 

@@ -55,19 +55,7 @@ namespace Checkers.Tournament
             var white = new MyRemotePlayer(args[0], Color.White);
             var black = new MyRemotePlayer(args[1], Color.Black);
             var validator = new Validator();
-            var field = new Checker[8, 8];
-            for (var i = 0; i < 4; i++)
-                for (var j = 0; j < 3; j++)
-                    if (j == 1)
-                    {
-                        field[i * 2 + 1, 7 - j] = new Checker(Color.White, false);
-                        field[i * 2, j] = new Checker(Color.Black, false);
-                    }
-                    else
-                    {
-                        field[i * 2, 7 - j] = new Checker(Color.White, false);
-                        field[i * 2 + 1, j] = new Checker(Color.Black, false);
-                    }
+            var field = new Game().CreateMap();
             while (true)
             {
                 validator.IsCorrectMove(white.MakeTurn(field), field, Color.White);

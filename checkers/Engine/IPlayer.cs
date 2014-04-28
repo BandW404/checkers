@@ -8,11 +8,13 @@ namespace Checkers
 {
     public interface IPlayer
     {
-        Color Color
+        Color Color //убрать свойство
         {
             get;
-            set;
+            set; //убрать сеттер
         }
+
+        //void Initialize(Color color);
 
         List<Move> MakeTurn(Checker[,] field);
     }
