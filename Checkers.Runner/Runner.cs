@@ -28,14 +28,20 @@ namespace Checkers.Runner
             //var ctor = player.GetConstructors().FirstOrDefault();
             var playerObject = ctor
                 .Invoke(new object[] { }) as IPlayer;
-            playerObject.Color = color;
+            playerObject.Initialize(color);
             //Console.WriteLine(playerObject.MakeTurn(new Game().CreateMap()).Count);
             while (true)
             {
                 var str = Console.ReadLine();
-                var field=(Checker[,])serializer.Deserialize(str, typeof(Checker[,]));
-                var moves=playerObject.MakeTurn( field);
-            Console.WriteLine(serializer.Serialize(moves));
+                throw new Exception(str);
+                var field = Serializer.StringToField(str);
+                var moves = playerObject.MakeTurn(field);
+                if (moves == null || moves.Count == 0)
+                    throw new Exception(" game over ?");
+                var answer = Serializer.MovesToString(moves);
+                if (answer == null || answer == "")
+                    throw new Exception("qqq");
+                Console.WriteLine(answer);
             }
 
             //

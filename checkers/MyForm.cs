@@ -16,16 +16,17 @@ namespace Checkers
         const int ElementSize = 64;
         List<Move> moves;
         List<Point> playerMoves = new List<Point>();
-        Player white = new Player(Color.White);
-        Player black = new Player(Color.Black);
+        Player white = new Player();
+        Player black = new Player();
         int tickCount;
         Checker[,] field;
         Point turn = new Point(-1,-1);
         Validator validator;
-        int turnCount;
 
         public MyForm(Checker[,] field)
         {
+            white.Initialize(Color.White);
+            black.Initialize(Color.Black);
             //to make a turn mark your fields to go one by one and press "T". To simulate a game
             //press space button. Happy gaming, your BandW404 team!
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;

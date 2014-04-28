@@ -8,16 +8,11 @@ namespace Checkers
 {
     public class Player : IPlayer
     {
-        public Player(Color color)
+        Color Color;
+        public void Initialize(Color color)
         {
-            this.Color = color;
+            Color = color;
         }
-        public Color Color
-        {
-            get;
-            set;
-        }
-
         public List<Move> MakeTurn(Checker[,] field)
         {
             Func<Point, bool> InField = (point => point.X < 8 && point.X >= 0 && point.Y < 8 && point.Y >= 0);

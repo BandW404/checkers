@@ -61,7 +61,7 @@ namespace Checkers
                     validator.IsCorrectMove(moves, field, color); 
                     Assert.Fail(); 
                 }
-                catch (NotImplementedException e) { }
+                catch (NotImplementedException) { }
             else
                 validator.IsCorrectMove(moves, field, color);
 

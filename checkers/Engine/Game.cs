@@ -42,8 +42,10 @@ namespace Checkers
         public void StartGame()
         {
             validator = new Validator();
-            whitePlayer = new Player(Color.White);
-            blackPlayer = new Player(Color.Black);
+            whitePlayer = new Player();
+            whitePlayer.Initialize(Color.White);
+            blackPlayer = new Player();
+            blackPlayer.Initialize(Color.Black);
             List<Move> listOfMoves;
             while (true)
             {

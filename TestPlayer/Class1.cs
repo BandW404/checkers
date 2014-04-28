@@ -9,12 +9,11 @@ namespace TestPlayer
 {
     public class TestPlayer : IPlayer
     {
-        public Color Color
+        public void Initialize(Color color)
         {
-            get;
-            set;
+            Color = color;
         }
-
+        Color Color;
         public List<Move> MakeTurn(Checker[,] field)
         {
             Func<Point, bool> InField = (point => point.X < 8 && point.X >= 0 && point.Y < 8 && point.Y >= 0);
@@ -68,6 +67,16 @@ namespace TestPlayer
                 return answer;
             }
             return null;
+        }
+
+        void IPlayer.Initialize(Color color)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<Move> IPlayer.MakeTurn(Checker[,] field)
+        {
+            throw new NotImplementedException();
         }
     }
 }
