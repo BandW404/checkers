@@ -4,13 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 
 namespace Checkers.Runner
 {
     class Program
     {
-        static JavaScriptSerializer serializer = new JavaScriptSerializer();
         static void Main(string[] args)
         {
             var assembly = Assembly.LoadFrom(args[0]);
@@ -37,6 +35,7 @@ namespace Checkers.Runner
                     Environment.Exit(0);
                 }
                 var answer = Serializer.MovesToString(moves);
+                //Logs.AddLog(args[0] + "'s (" + args[1] + ") turn: " + answer);
                 Console.WriteLine(answer);
             }
         }

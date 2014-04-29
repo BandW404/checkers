@@ -5,70 +5,65 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using System.Threading;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Checkers
 {
-    class MyRemotePlayer
-    {
-        Process process;
-        public MyRemotePlayer(string dllName, Color color)
-        {
-            process = new Process();
-            process.StartInfo.FileName = "Checkers.Runner.exe";
-            process.StartInfo.Arguments = dllName + " " + color.ToString();
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardInput = true;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.CreateNoWindow = false;
-            process.Start();
-        }
-
-        public List<Move> MakeTurn(Checker[,] field)
-        {
-            var fieldInString = Serializer.FieldToString(field);
-            process.StandardInput.WriteLine(fieldInString);
-            var movesInString = process.StandardOutput.ReadLine();
-            if (movesInString == "White LOSE" || movesInString == "Black LOSE")
-            {
-                Console.WriteLine(movesInString);
-                Environment.Exit(0);
-            }
-            return Serializer.StringToMoves(movesInString);
-        }
-    }
-
-
     public class Program
     {
-        public static string firstPlayerFile;
-        public static string secondPlayerFile;
-        public static Form1 Window = new Form1();
+        public const int TimeOutOfMove = 5; // эти две константы вы можете спокойно меня для удобства тестирования.
+        public const int BestOf = 9;
+        public static int GamesCount = 1;
+        public static int Winner; 
+        static string firstPlayerFile;
+        static string secondPlayerFile;
+        static Form1 Window = new Form1();
+        public static Thread thread;
+
         [STAThread]
         static void Main(string[] args)
         {
             firstPlayerFile = args[0];
             secondPlayerFile = args[1];
-            var thread = new Thread(Gaming);
+            thread = new Thread(Gaming);
             thread.Start();
             Application.Run(Window);
         }
-        static void Gaming()
+        public static void Gaming()
         {
+            Logs.AddToLog("Game #" + GamesCount + ". " + firstPlayerFile + "(White) versus " + secondPlayerFile + "(Black). Let the battle begin!");
+            var movesCount = 0;
             var white = new MyRemotePlayer(firstPlayerFile, Color.White);
             var black = new MyRemotePlayer(secondPlayerFile, Color.Black);
             var validator = new Validator();
             var field = new Game().CreateMap();
             while (true)
             {
+                movesCount++;
+                if (movesCount > 300)
+                {
+                    Logs.AddToLog("i'm done. it's a drow");
+                    if (GamesCount != BestOf)
+                    {
+                        GamesCount++;
+                        var thr = new Thread(Gaming);
+                        thr.Start();
+                        Thread.CurrentThread.Abort();
+                    }
+                    else
+                    {
+                        Environment.Exit(0);
+                        Logs.Done();
+                    }
+                }
                 validator.IsCorrectMove(white.MakeTurn(field), field, Color.White);
                 Window.BeginInvoke(new Action<Checker[,]>(Window.Update), new object[] { field });
-                Thread.Sleep(500);
+                Thread.Sleep(TimeOutOfMove);
                 validator.IsCorrectMove(black.MakeTurn(field), field, Color.Black);
                 Window.BeginInvoke(new Action<Checker[,]>(Window.Update), new object[] { field });
-                Thread.Sleep(500);
+                Thread.Sleep(TimeOutOfMove);
             }
         }
     }

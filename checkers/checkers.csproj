@@ -55,6 +55,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Support\Checker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Support\Logs.cs" />
     <Compile Include="Support\Move.cs" />
     <Compile Include="Support\Point.cs" />
     <Compile Include="Support\Serializer.cs" />
