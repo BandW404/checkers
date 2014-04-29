@@ -25,11 +25,16 @@ namespace Checkers
         }
         public static bool operator ==(Point a, Point b)
         {
-            return a.X == b.X && a.Y == b.Y;
+            if ((object)a == null)
+                return (object)b == null;
+            return a.Equals(b);
         }
         public override bool Equals(object a)
         {
-            return this == (Point)a;
+            if (a == null || !(a is Point))
+                return false;
+            var point = (Point)a;
+            return X == point.X && Y == point.Y;
         }
         public static bool operator !=(Point a, Point b)
         {

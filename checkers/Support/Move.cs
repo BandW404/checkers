@@ -25,11 +25,16 @@ namespace Checkers
         }
         public static bool operator ==(Move a, Move b)
         {
-            return a.From == b.From && a.To == b.To;
+            if ((object)a == null)
+                return (object)b == null;
+            return a.Equals(b);
         }
         public override bool Equals(object a)
         {
-            return this == (Move)a;
+            if (a == null || !(a is Move))
+                return false;
+            var move = (Move)a;
+            return From == move.From && To == move.To;
         }
         public static bool operator !=(Move a, Move b)
         {

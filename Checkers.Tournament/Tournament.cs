@@ -9,7 +9,7 @@ using System.Web.Script.Serialization;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace Checkers.Tournament
+namespace Checkers
 {
     class MyRemotePlayer
     {

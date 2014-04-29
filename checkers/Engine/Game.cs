@@ -17,14 +17,10 @@ namespace Checkers
 
     public class Game
     {
-        Checker[,] field;
-        IPlayer whitePlayer;
-        IPlayer blackPlayer;
-        Validator validator;
-
+        public static Random Rand = new Random();
         public Checker[,] CreateMap()
         {
-            field = new Checker[8,8];
+            var field = new Checker[8,8];
             for (var i = 0; i < 4; i++)
                 for (var j = 0; j < 3; j++)
                     if (j == 1)
@@ -38,27 +34,6 @@ namespace Checkers
                         field[i * 2 + 1, j] = new Checker(Color.Black, false);
                     }
             return field;
-        }
-        public void StartGame()
-        {
-            validator = new Validator();
-            whitePlayer = new Player();
-            whitePlayer.Initialize(Color.White);
-            blackPlayer = new Player();
-            blackPlayer.Initialize(Color.Black);
-            List<Move> listOfMoves;
-            while (true)
-            {
-                listOfMoves = whitePlayer.MakeTurn(field);
-                validator.IsCorrectMove(listOfMoves, field, Color.White);
-                listOfMoves = blackPlayer.MakeTurn(field);
-                validator.IsCorrectMove(listOfMoves, field, Color.Black);
-            }
-        }
-        public static void GameOver(Color loser)
-        {
-            Console.WriteLine(loser.ToString() + " lose");
-            Environment.Exit(0);
         }
     }
 }
