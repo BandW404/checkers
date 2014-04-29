@@ -48,23 +48,38 @@ namespace Checkers.Tournament
 
     public class Program
     {
-        //public static event Action<Checker[,]> update;
+        public static string firstPlayerFile;
+        public static string secondPlayerFile;
+        public static Form1 Window = new Form1();
+        public static event Action<Checker[,]> update;
         [STAThread]
         static void Main(string[] args)
         {
-            var white = new MyRemotePlayer(args[0], Color.White);
-            var black = new MyRemotePlayer(args[1], Color.Black);
-            var validator = new Validator();
-            var field = new Game().CreateMap();
-            Application.Run(new MyForm(field));
-            while (true)
-            {
-                validator.IsCorrectMove(white.MakeTurn(field), field, Color.White);
-                Application.Run(new MyForm(field));
-                validator.IsCorrectMove(black.MakeTurn(field), field, Color.Black);
-                //update(field);
-                Application.Run(new MyForm(field));
-            }
+            firstPlayerFile = args[0];
+            secondPlayerFile = args[1];
+            var thread = new Thread(Gaming);
+            thread.Start();
+            Application.Run(Window);
+            //var white = new MyRemotePlayer(args[0], Color.White);
+            //var black = new MyRemotePlayer(args[1], Color.Black);
+            //var validator = new Validator();
+            //var field = new Game().CreateMap();
+            ////Application.Run(new MyForm(field));
+            ////var formThread = new Thread(Gaming);
+            ////formThread.Start(args);
+            //Thread.Sleep(50);
+            //while (true)
+            //{
+            //    //form.BeginInvoke(Update);
+            //    validator.IsCorrectMove(white.MakeTurn(field), field, Color.White);
+            //    //Application.Run(new MyForm(field));
+            //    //update(field); //???
+            //    //Thread.Sleep(500);
+            //    validator.IsCorrectMove(black.MakeTurn(field), field, Color.Black);
+            //    //update(field);
+            //    //Thread.Sleep(500);
+            //    //Application.Run(new MyForm(field));
+            //}
 
 
 
@@ -95,6 +110,33 @@ namespace Checkers.Tournament
 
             //и м.б. отрисовка?
 
+        }
+        static void Gaming()
+        {
+            var white = new MyRemotePlayer(firstPlayerFile, Color.White);
+            var black = new MyRemotePlayer(secondPlayerFile, Color.Black);
+            var validator = new Validator();
+            var field = new Game().CreateMap();
+            //Application.Run(new MyForm(field));
+            //var formThread = new Thread(Gaming);
+            //formThread.Start(args);
+            //Thread.Sleep(50);
+            while (true)
+            {
+                //form.BeginInvoke(Update);
+                validator.IsCorrectMove(white.MakeTurn(field), field, Color.White);
+                Window.BeginInvoke(new Action<Checker[,]>(Window.Update), new object[] { field });
+                Thread.Sleep(500);
+                //Application.Run(new MyForm(field));
+                //update(field); //???
+                //Thread.Sleep(500);
+                validator.IsCorrectMove(black.MakeTurn(field), field, Color.Black);
+                Window.BeginInvoke(update, new object[] { field });
+                Thread.Sleep(500);
+                //update(field);
+                //Thread.Sleep(500);
+                //Application.Run(new MyForm(field));
+            }
         }
     }
 }

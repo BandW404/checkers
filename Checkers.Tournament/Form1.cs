@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Threading;
 
 namespace Checkers
 {
@@ -23,22 +24,22 @@ namespace Checkers
         Point turn = new Point(-1, -1);
         Validator validator;
 
-        public Form1(Checker[,] field)
+        public Form1()
         {
             white.Initialize(Color.White);
             black.Initialize(Color.Black);
             //to make a turn mark your fields to go one by one and press "T". To simulate a game
             //press space button. Happy gaming, your BandW404 team!
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.field = field;
             validator = new Validator();
             StartPosition = FormStartPosition.CenterScreen;
             ClientSize = new Size(ElementSize * 8, ElementSize * 8);
             DoubleBuffered = true;
             Text = "Checkers";
             tickCount = 0;
-            //Checkers.Tournament.Program.update += Update;
-            Update(field);
+            Checkers.Tournament.Program.update += Update;
+            field = new Game().CreateMap();
+            //Update(field);
             //this.KeyDown += MyForm_KeyDown;
             //this.MouseClick += MyForm_MouseClick;
         }
@@ -98,10 +99,11 @@ namespace Checkers
                 Invalidate();
             }
         }
-        void Update(Checker[,] field)
+        public void Update(Checker[,] field)
         {
             this.field = field;
             Invalidate();
+            //Thread.Sleep(0);
         }
         protected override void OnPaint(PaintEventArgs e)
         {
