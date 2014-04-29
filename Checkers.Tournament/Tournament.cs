@@ -15,6 +15,7 @@ namespace Checkers
     {
         public const int TimeOutOfMove = 5; // эти две константы вы можете спокойно меня для удобства тестирования.
         public const int BestOf = 9;
+        public static bool usingForm;
         public static int GamesCount = 1;
         public static int Winner; 
         static string firstPlayerFile;
@@ -25,11 +26,14 @@ namespace Checkers
         [STAThread]
         static void Main(string[] args)
         {
+            if (args.Length > 2 && args[2] == "true")
+                usingForm = true;
             firstPlayerFile = args[0];
             secondPlayerFile = args[1];
             thread = new Thread(Gaming);
             thread.Start();
-            Application.Run(Window);
+            if (usingForm)
+                Application.Run(Window);
         }
         public static void Gaming()
         {
@@ -59,10 +63,12 @@ namespace Checkers
                     }
                 }
                 validator.IsCorrectMove(white.MakeTurn(field), field, Color.White);
-                Window.BeginInvoke(new Action<Checker[,]>(Window.Update), new object[] { field });
+                if (usingForm)
+                    Window.BeginInvoke(new Action<Checker[,]>(Window.Update), new object[] { field });
                 Thread.Sleep(TimeOutOfMove);
                 validator.IsCorrectMove(black.MakeTurn(field), field, Color.Black);
-                Window.BeginInvoke(new Action<Checker[,]>(Window.Update), new object[] { field });
+                if (usingForm)
+                    Window.BeginInvoke(new Action<Checker[,]>(Window.Update), new object[] { field });
                 Thread.Sleep(TimeOutOfMove);
             }
         }
