@@ -14,22 +14,16 @@ namespace Checkers.Runner
         static void Main(string[] args)
         {
             var assembly = Assembly.LoadFrom(args[0]);
-            Color color;
-            if (args[1] == "White")
-                color = Color.White;
-            else
-                color = Color.Black;
+            Color color = args[1] == "White" ? Color.White : Color.Black;
             var player = assembly
                 .GetTypes()
                 .Where(z => z.GetInterfaces().Any(x => x == typeof(IPlayer)))
                 .FirstOrDefault();
             var ctor = player
                 .GetConstructor(new Type[] { });
-            //var ctor = player.GetConstructors().FirstOrDefault();
             var playerObject = ctor
                 .Invoke(new object[] { }) as IPlayer;
             playerObject.Initialize(color);
-            //Console.WriteLine(playerObject.MakeTurn(new Game().CreateMap()).Count);
             while (true)
             {
                 var str = Console.ReadLine();
@@ -43,16 +37,8 @@ namespace Checkers.Runner
                     Environment.Exit(0);
                 }
                 var answer = Serializer.MovesToString(moves);
-                if (answer == null || answer == "")
-                    throw new Exception("qqq");
                 Console.WriteLine(answer);
             }
-
-            //
-            // 1. Поднимаете IPlayer (одного) с помощью рефлексии
-
-            // в вечном цикле читаете из консоли карту шашечного поля, кормите ее игроку, а результат пишете в консоль
-
         }
     }
 }
