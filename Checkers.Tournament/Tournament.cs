@@ -13,7 +13,7 @@ namespace Checkers
 {
     public class Program
     {
-        public const int TimeOutOfMove = 5; // эти две константы вы можете спокойно меня для удобства тестирования.
+        public const int TimeOutOfMove = 0; // эти две константы вы можете спокойно меня для удобства тестирования.
         public const int BestOf = 9;
         public static bool usingForm;
         public static int GamesCount = 1;

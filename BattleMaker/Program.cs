@@ -12,8 +12,8 @@ namespace Checkers
 {
     public class ChallengeObjects
     {
-        private List<Tuple<string, string>> Fighters;
-        private Dictionary<string, int> Results;
+        public List<Tuple<string, string>> Fighters;
+        public Dictionary<string, int> Results;
         public ChallengeObjects()
         {
             //provides fighters combinations
