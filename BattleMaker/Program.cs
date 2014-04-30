@@ -18,7 +18,14 @@ namespace Checkers
         {
             //provides fighters combinations
             Fighters = GetFighters();
+            Fighters = FiltrateFighters();
             Results = GetResults();
+        }
+
+        public List<Tuple<string, string>> FiltrateFighters()
+        {
+            throw new NotImplementedException();
+            // фильтруем некорректные дллс
         }
 
         private Dictionary<string, int> GetResults()
