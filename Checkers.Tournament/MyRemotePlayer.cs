@@ -38,7 +38,7 @@ namespace Checkers
                     Program.Winner--;
                 else
                     Program.Winner++;
-                Console.WriteLine(movesInString);
+                //Console.WriteLine(movesInString);
                 Logs.AddToLog(movesInString);
                 if (Program.GamesCount != Program.BestOf)
                 {
@@ -51,19 +51,19 @@ namespace Checkers
                 {
                     if (Program.Winner > 0)
                     {
-                        var res = "\n\n\nWHITE WON THE GAME!!!";
+                        var res = "WHITE WON THE GAME!!!";
                         Logs.AddToLog(res);
                         Console.WriteLine(res);
                     }
                     if (Program.Winner < 0)
                     {
-                        var res = "\n\n\nBLACK WON THE GAME!!!";
+                        var res = "BLACK WON THE GAME!!!";
                         Logs.AddToLog(res);
                         Console.WriteLine(res);
                     }
                     if (Program.Winner == 0)
                     {
-                        var res = "\n\n\nDROW!";
+                        var res = "DRAW!";
                         Logs.AddToLog(res);
                         Console.WriteLine(res);
                     }

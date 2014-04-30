@@ -48,7 +48,7 @@ namespace Checkers
                 movesCount++;
                 if (movesCount > 300)
                 {
-                    Logs.AddToLog("i'm done. it's a drow");
+                    Logs.AddToLog("i'm done. it's a draw");
                     if (GamesCount != BestOf)
                     {
                         GamesCount++;
