@@ -18,13 +18,41 @@ namespace Checkers
         {
             //provides fighters combinations
             Fighters = GetFighters();
-            Fighters = FiltrateFighters();
+            FiltrateFighters();
             Results = GetResults();
         }
 
-        public List<Tuple<string, string>> FiltrateFighters()
+        public void FiltrateFighters()
         {
-            throw new NotImplementedException();
+            var pretendents = new Dictionary<string, int>();
+            foreach (var e in Fighters)
+                if (!pretendents.ContainsKey(e.Item1))
+                    pretendents[e.Item1] = 0;
+            var temp = pretendents.ToDictionary(x => x.Key, y => y.Value);
+            foreach (var e in temp)
+            {
+                try
+                {
+                    var process = new Process();
+                    process.StartInfo.FileName = "Checkers.Tournament.exe";
+                    process.StartInfo.Arguments = e.Key + " " + "testPlayer.dll";
+                    process.StartInfo.UseShellExecute = false;
+                    process.StartInfo.RedirectStandardInput = true;
+                    process.StartInfo.RedirectStandardOutput = true;
+                    process.StartInfo.CreateNoWindow = true;
+                    process.Start();
+                    var winner = process.StandardOutput.ReadLine()[0];
+                    if (winner == 'W')
+                        pretendents[e.Key]++;
+                }
+                catch
+                {
+                    pretendents[e.Key] = -10;
+                }
+            }
+            Fighters = Fighters.Where(x => pretendents.ContainsKey(x.Item1) && pretendents.ContainsKey(x.Item2))
+                               .ToList();
+            //добавить ограничение по победам
             // фильтруем некорректные дллс
         }
 
