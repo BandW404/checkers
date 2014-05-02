@@ -16,4 +16,4 @@ checkers
 
 Сами условия турнира будут определены позднее.
 
-Правила шашек: <url>http://www.gambler.ru/%CF%F0%E0%E2%E8%EB%E0_%F0%F3%F1%F1%EA%E8%F5_%F8%E0%F8%E5%EA</url>
+Правила шашек: <url>http://tinyurl.com/ocfyq4g</url>
