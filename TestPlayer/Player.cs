@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace TestPlayer
 {
-    public class TestPlayer : IPlayer
+    public class TestPlayer : IPlayer 
+        //тут собсно будет ваш код. 
+        //в пределах этого класса можете писать что угодно, 
+        //а все изменения за пределами него
+        //будут недействительны во время турнира
     {
         public void Initialize(Color color)
         {
