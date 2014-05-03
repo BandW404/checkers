@@ -11,7 +11,10 @@ namespace Checkers
         public void IsCorrectMove(List<Move> moves, Checker[,] field, Color playerColor)
         {
             if (moves == null)
+            {
+                Logs.AddToLog("Не сходил вообще");
                 throw new NotImplementedException("Player lost");
+            }
             var firstMove = true;
             var result = true;
             var start = new Point(-1,-1);
@@ -22,12 +25,21 @@ namespace Checkers
                     if (start.X == -1 && start.Y == -1)
                         start = turn.From;
                     if (start != turn.From)
-                        throw new NotImplementedException();
+                    {
+                        Logs.AddToLog("Пытался сходить не той пешкой, которой ходил вначале");
+                        throw new NotImplementedException("Пытался сходить не той пешкой, которой ходил вначале");
+                    }
                     var bindingMoves = GetBindingMoves(field, playerColor);
                     if (bindingMoves.Count == 0 && !firstMove)
-                        throw new NotImplementedException();
+                    {
+                        Logs.AddToLog("Попытка двойных ходов");
+                        throw new NotImplementedException("Попытка двойных ходов");
+                    }
                     if (bindingMoves.Count != 0 && !bindingMoves.Contains(turn))
-                        throw new NotImplementedException();
+                    {
+                        Logs.AddToLog("Были обязательные ходы, но ход не был сделан");
+                        throw new NotImplementedException("Были обязательные ходы, но ход не был сделан");
+                    }
                     if (!field[turn.From.X, turn.From.Y].IsQueen)
                         result &= IsCheckerTurnCorrect(field, playerColor, turn);
                     else
@@ -41,10 +53,17 @@ namespace Checkers
 
                 }
                 else result = false;
-                if (!result) throw new NotImplementedException();
-            var finalTest = GetBindingMoves(field,playerColor);
+            if (!result)
+            {
+                Logs.AddToLog("Некорректные ходы");
+                throw new NotImplementedException("Некорректные ходы");
+            }
+            var finalTest = GetBindingMoves(field, playerColor);
             if (IsInHashSet(finalTest, start) && attack)
-                throw new NotImplementedException();
+            {
+                Logs.AddToLog("Атака была не завершена");
+                throw new NotImplementedException("Атака была не завершена");
+            }
             return;
         }
 
