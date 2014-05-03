@@ -11,7 +11,12 @@ namespace Checkers.Runner
     {
         static void Main(string[] args)
         {
-            var assembly = Assembly.LoadFrom(args[0]);
+            var way = Environment.CurrentDirectory;
+            var ans = "";
+            for (var i = 0; i < way.Length - 29; i++)
+                ans += way[i];
+            ans += "TestPlayer\\bin\\Debug\\";
+            var assembly = Assembly.LoadFrom(ans + args[0]);
             Color color = args[1] == "White" ? Color.White : Color.Black;
             var player = assembly
                 .GetTypes()
@@ -35,7 +40,6 @@ namespace Checkers.Runner
                     Environment.Exit(0);
                 }
                 var answer = Serializer.MovesToString(moves);
-                //Logs.AddLog(args[0] + "'s (" + args[1] + ") turn: " + answer);
                 Console.WriteLine(answer);
             }
         }

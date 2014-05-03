@@ -49,15 +49,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestPlayer.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\checkers\Checkers.csproj">
       <Project>{3e70f0a1-d0a3-4bef-8106-ce5fc44c1e3a}</Project>
       <Name>Checkers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TestPlayer\TestPlayer.csproj">
+      <Project>{25b2ce23-8981-4a06-828e-44ff2319b026}</Project>
+      <Name>TestPlayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestPlayer.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

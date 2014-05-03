@@ -13,6 +13,7 @@ namespace Checkers
             if (moves == null)
             {
                 Logs.AddToLog("Не сходил вообще");
+                Logs.Done();
                 throw new NotImplementedException("Player lost");
             }
             var firstMove = true;
@@ -27,17 +28,20 @@ namespace Checkers
                     if (start != turn.From)
                     {
                         Logs.AddToLog("Пытался сходить не той пешкой, которой ходил вначале");
+                        Logs.Done();
                         throw new NotImplementedException("Пытался сходить не той пешкой, которой ходил вначале");
                     }
                     var bindingMoves = GetBindingMoves(field, playerColor);
                     if (bindingMoves.Count == 0 && !firstMove)
                     {
                         Logs.AddToLog("Попытка двойных ходов");
+                        Logs.Done();
                         throw new NotImplementedException("Попытка двойных ходов");
                     }
                     if (bindingMoves.Count != 0 && !bindingMoves.Contains(turn))
                     {
                         Logs.AddToLog("Были обязательные ходы, но ход не был сделан");
+                        Logs.Done();
                         throw new NotImplementedException("Были обязательные ходы, но ход не был сделан");
                     }
                     if (!field[turn.From.X, turn.From.Y].IsQueen)
@@ -56,12 +60,14 @@ namespace Checkers
             if (!result)
             {
                 Logs.AddToLog("Некорректные ходы");
+                Logs.Done();
                 throw new NotImplementedException("Некорректные ходы");
             }
             var finalTest = GetBindingMoves(field, playerColor);
             if (IsInHashSet(finalTest, start) && attack)
             {
                 Logs.AddToLog("Атака была не завершена");
+                Logs.Done();
                 throw new NotImplementedException("Атака была не завершена");
             }
             return;
