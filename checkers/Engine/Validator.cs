@@ -8,6 +8,7 @@ namespace Checkers
 {
     public class Validator
     {
+        private HashSet<Point> checkersTODelete = new HashSet<Point>();
         public void IsCorrectMove(List<Move> moves, Checker[,] field, Color playerColor)
         {
             if (moves == null)
@@ -70,6 +71,9 @@ namespace Checkers
                 Logs.Done();
                 throw new NotImplementedException("Атака была не завершена");
             }
+            foreach (var e in checkersTODelete)
+                field[e.X, e.Y] = null;
+            checkersTODelete.Clear();
             return;
         }
 
@@ -142,7 +146,7 @@ namespace Checkers
                                 if (InField(enemy) &&
                                     field[enemy.X, enemy.Y] != null &&
                                     field[enemy.X, enemy.Y].Color != playerColor &&
-                                    InField(free) &&
+                                    InField(free) && field[enemy.X, enemy.Y].Color != Color.Beated &&
                                     field[free.X, free.Y] == null)
                                     ans.Add(new Move(from, free));
                             }
@@ -200,12 +204,15 @@ namespace Checkers
                             if (field[x + dx[i] * delta, y + dy[i] * delta] != null
                                 && field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)] != null)
                             if (field[x + dx[i] * delta, y + dy[i] * delta].Color != playerColor
-                                && field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)].Color != playerColor)
+                                && field[x + dx[i] * delta, y + dy[i] * delta].Color != Color.Beated
+                                && field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)].Color != playerColor
+                                && field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)].Color != Color.Beated)
                                 noEnemy = false;
                         }
                         if (field[x+dx[i]*delta, y+dy[i]*delta] != null)
                             if (InField(new Point(x + dx[i] * (delta + 1), y + dy[i] * (delta + 1))))
-                                if ((field[x+dx[i]*delta, y+dy[i]*delta].Color != playerColor || enemyFound) && noEnemy
+                                if (((field[x+dx[i]*delta, y+dy[i]*delta].Color != playerColor
+                                    && field[x+dx[i]*delta, y+dy[i]*delta].Color != Color.Beated )|| enemyFound) && noEnemy
                                     && field[x+dx[i]*(delta+1), y+dy[i]*(delta+1)] == null)
                                 {
                                     ans.Add(new Move(new Point(x,y), new Point(x+dx[i]*(delta+1), y+dy[i]*(delta+1))));
@@ -265,7 +272,10 @@ namespace Checkers
                     }
 
                     if (field[x + dx * i, y + dy * i] != null)
-                        field[x + dx * i, y + dy * i] = null;
+                    {
+                        checkersTODelete.Add(new Point(x + dx * i, y + dy * i));
+                        field[x + dx * i, y + dy * i] = new Checker(Color.Beated, false);
+                    }
                 }
 
         }

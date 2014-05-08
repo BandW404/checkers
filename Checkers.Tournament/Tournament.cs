@@ -14,7 +14,7 @@ namespace Checkers
     public class Program
     {
         // эти две константы вы можете спокойно меня для удобства тестирования.
-        public const int TimeOutOfMove = 50;  //задержка между ходами(для формочки).
+        public const int TimeOutOfMove = 1000;  //задержка между ходами(для формочки).
         public const int BestOf = 9; //кол-во игр, по результатам которых будет определяться победитель дуэли. турнир будет проходить с числом 9.
         public static bool usingForm;
         public static int GamesCount = 1;
