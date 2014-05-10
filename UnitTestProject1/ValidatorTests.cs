@@ -465,11 +465,19 @@ namespace Checkers
             Test(moves, Color.White, true, "Tests17.txt");
         }
         [TestMethod]
-        public void MustAttackBeaten()
+        public void QueenMustBePrettyGirl() // пешка должна рубить, становиться квиной, и оставаться на месте.
         {
             var moves = new List<Move>();
             moves.Add(new Move(new Point(2, 2), new Point(0, 0)));
             Test(moves, Color.White, true, "Tests18.txt");
+        }
+        [TestMethod]
+        public void TryAttackBeaten() // типа срубил ту парашку, он не должен этого делать.
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(2, 2), new Point(0, 0)));
+            moves.Add(new Move(new Point(0, 0), new Point(7, 7)));
+            Test(moves, Color.White, false, "Tests18.txt");
         }
     }
 }
