@@ -464,5 +464,12 @@ namespace Checkers
             moves.Add(new Move(new Point(4, 4), new Point(3, 3)));
             Test(moves, Color.White, true, "Tests17.txt");
         }
+        [TestMethod]
+        public void MustAttackBeaten()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(2, 2), new Point(0, 0)));
+            Test(moves, Color.White, true, "Tests18.txt");
+        }
     }
 }
