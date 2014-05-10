@@ -380,5 +380,89 @@ namespace Checkers
             moves.Add(new Move(new Point(0, 0), new Point(1, 1)));
             Test(moves, Color.White, true, "Tests13.txt");
         }
+        [TestMethod]
+        public void QueenAgainKillTeammate()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(0, 0), new Point(3, 3)));
+            Test(moves, Color.White, false, "Tests13.txt");
+        }
+        [TestMethod]
+        public void QueenAgainKillTeammate2()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(0, 0), new Point(3, 3)));
+            Test(moves, Color.White, false, "Tests14.txt");
+        }
+        [TestMethod]
+        public void QueenAgainKillTeammate3()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(0, 0), new Point(1, 1)));
+            Test(moves, Color.White, false, "Tests15.txt");
+        }
+        [TestMethod]
+        public void QueenAgainKillTeammate4()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(0, 0), new Point(3, 3)));
+            Test(moves, Color.White, true, "Tests15.txt");
+        }
+        [TestMethod]
+        public void QueenAgainKillTeammate5() //непонятная хунта, почему-то рубит через все поле -- зеленый свет, а в 7 тесте норм палит парашку.
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(0, 0), new Point(7, 7)));
+            Test(moves, Color.White, false, "Tests15.txt");
+        }
+        [TestMethod]
+        public void QueenAgainKillTeammate6()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(0, 0), new Point(1, 1)));
+            Test(moves, Color.White, false, "Tests16.txt");
+        }
+        [TestMethod]
+        public void QueenAgainKillTeammate7()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(0, 0), new Point(6, 6)));
+            Test(moves, Color.White, false, "Tests16.txt");
+        }
+        [TestMethod]
+        public void QueenAgainKillTeammate8()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(3, 3), new Point(1, 1)));
+            Test(moves, Color.White, true, "Tests16.txt");
+        }
+        [TestMethod]
+        public void QueenAgainKillTeammate9()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(2, 2), new Point(7, 7)));
+            Test(moves, Color.White, false, "Tests17.txt");
+        }
+        [TestMethod]
+        public void QueenAgainKillTeammate10()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(4, 4), new Point(1, 1)));
+            Test(moves, Color.White, false, "Tests17.txt");
+        }
+        [TestMethod]
+        public void QueenAgainKillTeammate11()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(4, 4), new Point(0, 0)));
+            Test(moves, Color.White, false, "Tests17.txt");
+        }
+        [TestMethod]
+        public void QueenAgainKillTeammate12()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(4, 4), new Point(3, 3)));
+            Test(moves, Color.White, true, "Tests17.txt");
+        }
     }
 }
