@@ -212,11 +212,6 @@ namespace Checkers
                                 noBlock = false;
                             if (field[x + dx[i] * delta, y + dy[i] * delta] != null && field[x + dx[i] * delta, y + dy[i] * delta].Color == playerColor)
                                 noBlock = false;
-                            if (field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)] != null && field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)].Color == Color.Beated)
-                                noBlock = false;
-                            if (field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)] != null && field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)].Color == playerColor)
-                                noBlock = false;
-
                         }
                         if (field[x + dx[i] * delta, y + dy[i] * delta] != null)
                             if (InField(new Point(x + dx[i] * (delta + 1), y + dy[i] * (delta + 1))))
