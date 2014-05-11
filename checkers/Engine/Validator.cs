@@ -20,7 +20,8 @@ namespace Checkers
             var firstMove = true;
             var result = true;
             var start = new Point(-1,-1);
-            var attack = GetBindingMoves(field, playerColor).Count != 0;
+            var mv = GetBindingMoves(field, playerColor);
+            var attack = mv.Count != 0;
             foreach (var turn in moves)
                 if (result && InField(new Point(turn.From.X, turn.From.Y)) && InField(new Point(turn.To.X, turn.To.Y)) && field[turn.From.X, turn.From.Y] != null)
                 {
@@ -194,33 +195,43 @@ namespace Checkers
             var ans = new HashSet<Move>();
             for (var i = 0; i < 4; i++)
             {
-                var noEnemy = true;
+                var noBlock = true;
                 var enemyFound = false;
                 for (var delta = 1; delta < 8; delta++)
-                    if  (InField(new Point(x+dx[i]*delta, y+dy[i]*delta)))
-                    { 
-                        if (InField(new Point(x+dx[i]*(delta+1), y+dy[i]*(delta+1))))
+                    if (InField(new Point(x + dx[i] * delta, y + dy[i] * delta)))
+                    {
+                        if (InField(new Point(x + dx[i] * (delta + 1), y + dy[i] * (delta + 1))))
                         {
                             if (field[x + dx[i] * delta, y + dy[i] * delta] != null
                                 && field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)] != null)
-                            if (field[x + dx[i] * delta, y + dy[i] * delta].Color != playerColor
-                                && field[x + dx[i] * delta, y + dy[i] * delta].Color != Color.Beated
-                                && field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)].Color != playerColor
-                                && field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)].Color != Color.Beated)
-                                noEnemy = false;
+                                if (field[x + dx[i] * delta, y + dy[i] * delta].Color != playerColor
+                                    && field[x + dx[i] * delta, y + dy[i] * delta].Color != Color.Beated
+                                    && field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)].Color != Color.Beated)
+                                    noBlock = false;
+                            if (field[x + dx[i] * delta, y + dy[i] * delta] != null && field[x + dx[i] * delta, y + dy[i] * delta].Color == Color.Beated)
+                                noBlock = false;
+                            if (field[x + dx[i] * delta, y + dy[i] * delta] != null && field[x + dx[i] * delta, y + dy[i] * delta].Color == playerColor)
+                                noBlock = false;
+                            if (field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)] != null && field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)].Color == Color.Beated)
+                                noBlock = false;
+                            if (field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)] != null && field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)].Color == playerColor)
+                                noBlock = false;
+
                         }
-                        if (field[x+dx[i]*delta, y+dy[i]*delta] != null)
+                        if (field[x + dx[i] * delta, y + dy[i] * delta] != null)
                             if (InField(new Point(x + dx[i] * (delta + 1), y + dy[i] * (delta + 1))))
-                                if (((field[x+dx[i]*delta, y+dy[i]*delta].Color != playerColor
-                                    && field[x+dx[i]*delta, y+dy[i]*delta].Color != Color.Beated )|| enemyFound) && noEnemy
-                                    && field[x+dx[i]*(delta+1), y+dy[i]*(delta+1)] == null)
+                                if (((field[x + dx[i] * delta, y + dy[i] * delta].Color != playerColor
+                                    && field[x + dx[i] * delta, y + dy[i] * delta].Color != Color.Beated)) && noBlock
+                                    && field[x + dx[i] * (delta + 1), y + dy[i] * (delta + 1)] == null)
                                 {
-                                    ans.Add(new Move(new Point(x,y), new Point(x+dx[i]*(delta+1), y+dy[i]*(delta+1))));
+                                    ans.Add(new Move(new Point(x, y), new Point(x + dx[i] * (delta + 1), y + dy[i] * (delta + 1))));
                                     enemyFound = true;
                                 }
-                        if (enemyFound && field[x + dx[i] * delta, y + dy[i] * delta] == null)
+                        if (enemyFound && field[x + dx[i] * delta, y + dy[i] * delta] == null && noBlock)
+                        {
                             ans.Add(new Move(new Point(x, y), new Point(x + dx[i] * (delta), y + dy[i] * (delta))));
                         }
+                    }
             }
             return ans;
         }
@@ -259,6 +270,7 @@ namespace Checkers
             var x = move.From.X;
             var y = move.From.Y;
             var checker = new Checker(field[x,y].Color, field[x,y].IsQueen);
+            var color = field[x, y].Color;
             field[x, y] = null;
             for (var i = 1; i < 7; i++)
                 if (InField(new Point(x + dx * i, y + dy * i)))
@@ -271,7 +283,7 @@ namespace Checkers
                         break;
                     }
 
-                    if (field[x + dx * i, y + dy * i] != null)
+                    if (field[x + dx * i, y + dy * i] != null && field[x + dx * i, y + dy * i].Color != color)
                     {
                         checkersTODelete.Add(new Point(x + dx * i, y + dy * i));
                         field[x + dx * i, y + dy * i] = new Checker(Color.Beated, false);
