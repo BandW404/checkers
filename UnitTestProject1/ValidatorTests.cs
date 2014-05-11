@@ -479,5 +479,21 @@ namespace Checkers
             moves.Add(new Move(new Point(0, 0), new Point(7, 7)));
             Test(moves, Color.White, false, "Tests18.txt");
         }
+        [TestMethod]
+        public void TryAttackBeaten2() 
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(5, 5), new Point(7, 7)));
+            moves.Add(new Move(new Point(7, 7), new Point(1, 1)));
+            Test(moves, Color.Black, false, "Tests19.txt");
+        }
+        [TestMethod]
+        public void TryAttackBeaten3()
+        {
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(5, 2), new Point(7, 0)));
+            moves.Add(new Move(new Point(7, 0), new Point(0, 7)));
+            Test(moves, Color.White, false, "Tests20.txt");
+        }
     }
 }
