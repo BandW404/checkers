@@ -34,6 +34,43 @@ namespace Checkers
             return map;
         }
         [TestMethod]
+        public void SomeStrange() // привет епт
+        {
+            var field = GetMapFrom("Tests88.txt");
+            var validator = new Validator();
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(0, 7), new Point(7, 0))); // дамка просто делает привязный ход и рубит другую дамку
+            validator.IsCorrectMove(moves, field, Color.Black); //твой забаганный валидатор получает этот ход, поле и все такое.
+            var newField = GetMapFrom("Tests89.txt"); //беру карту которая должна быть после хода (с дамкой)
+            Assert.AreEqual(Serializer.FieldToString(newField), Serializer.FieldToString(field)); //обнаруживаю, что дамки ниха нет :С
+        }
+        [TestMethod]
+        public void SomeStrange2() // эта фишка только если рубишь из угла. если ближе -- такого нет
+        {
+            var field = GetMapFrom("Tests90.txt");
+            var validator = new Validator();
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(7, 7), new Point(0, 0))); 
+            validator.IsCorrectMove(moves, field, Color.White);
+            var newField = GetMapFrom("Tests91.txt"); 
+            Assert.AreEqual(Serializer.FieldToString(newField), Serializer.FieldToString(field));
+        }
+        [TestMethod]
+        public void SomeStrange3() // так же это только из угла в угол. если рубишь ближе -- все хорошо
+        {
+            var field = GetMapFrom("Tests92.txt");
+            var validator = new Validator();
+            var moves = new List<Move>();
+            moves.Add(new Move(new Point(0, 7), new Point(7, 0)));
+            validator.IsCorrectMove(moves, field, Color.Black);
+            var newField = GetMapFrom("Tests93.txt");
+            Assert.AreEqual(Serializer.FieldToString(newField), Serializer.FieldToString(field));
+        }
+        //Итого: Этот баг для обоих цветов. Этот баг распространяется только если рубящая фигура -- дамка.
+        //Пешка ли, дамка ли та, кого бьют -- не важно. Где находится вражеская фигура на диагонали -- не важно.
+        //При рубке дамкой из одного угла в другой через всю диагональ -- обе фигуры исчезают. 
+        //Если дамка рубит не в последнюю клетку -- все хорошо, если дамка рубит не из последней клетки -- все хорошо.
+        [TestMethod]
         public void HashTest()
         {
             var moves = new HashSet<Move>();
