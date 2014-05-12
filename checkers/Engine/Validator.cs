@@ -11,7 +11,7 @@ namespace Checkers
         private HashSet<Point> checkersTODelete = new HashSet<Point>();
         public void IsCorrectMove(List<Move> moves, Checker[,] field, Color playerColor)
         {
-            if (moves == null)
+            if (moves == null || (moves != null && moves.Count == 0))
             {
                 Logs.AddToLog("Не сходил вообще");
                 Logs.Done();
