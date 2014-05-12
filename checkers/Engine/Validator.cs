@@ -233,12 +233,9 @@ namespace Checkers
 
         private Tuple<int,int> GetDelta(Move move)
         {
-            Tuple<int,int> ans = new Tuple<int,int>(0,0);
-            if (move.To.X > move.From.X && move.To.Y > move.From.Y) ans = new Tuple<int, int>(1, 1);
-            if (move.To.X > move.From.X && move.To.Y < move.From.Y) ans = new Tuple<int, int>(1, -1);
-            if (move.To.X < move.From.X && move.To.Y > move.From.Y) ans = new Tuple<int, int>(-1, 1);
-            if (move.To.X < move.From.X && move.To.Y < move.From.Y) ans = new Tuple<int, int>(-1, -1);
-            return ans;
+            var dx = move.To.X > move.From.X ? 1 : -1;
+            var dy = move.To.Y > move.From.Y ? 1 : -1;
+            return new Tuple<int, int>(dx, dy);
         }
         public HashSet<Move> AddBindingForQueens(Checker[,] field, Color color)
         {
@@ -267,7 +264,7 @@ namespace Checkers
             var checker = new Checker(field[x,y].Color, field[x,y].IsQueen);
             var color = field[x, y].Color;
             field[x, y] = null;
-            for (var i = 1; i < 7; i++)
+            for (var i = 0; i < 8; i++)
                 if (InField(new Point(x + dx * i, y + dy * i)))
                 {
                     if (move.To.X == x + dx * i && move.To.Y == y + dy * i)
