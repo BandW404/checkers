@@ -23,12 +23,19 @@ namespace Checkers
         static string secondPlayerFile;
         static Form1 Window = new Form1();
         public static Thread thread;
+        public static bool usingTimer;
+        public static Stopwatch time;
+        public static int MaxWhite;
+        public static int MaxBlack;
 
         [STAThread]
         static void Main(string[] args)
         {
             if (args.Length > 2 && args[2] == "true")
                 usingForm = true;
+            if (args.Length > 3 && args[3] == "timer")
+                usingTimer = true;
+            time = new Stopwatch();
             firstPlayerFile = args[0];
             secondPlayerFile = args[1];
             thread = new Thread(Gaming);
@@ -47,7 +54,7 @@ namespace Checkers
             while (true)
             {
                 movesCount++;
-                if (movesCount > 300)
+                if (movesCount > 150)
                 {
                     Logs.AddToLog("i'm done. it's a draw");
                     if (GamesCount != BestOf)
@@ -63,14 +70,42 @@ namespace Checkers
                         Logs.Done();
                     }
                 }
+                if (usingTimer && movesCount > 1)
+                {
+                    time.Reset();
+                    time.Start();
+                }
                 validator.IsCorrectMove(white.MakeTurn(field), field, Color.White);
+                if (usingTimer && movesCount > 1)
+                {
+                    time.Stop();
+                    var ms = time.Elapsed.Milliseconds;
+                    Logs.AddToLog(ms.ToString());
+                    MaxWhite = Math.Max(MaxWhite, ms);
+                }
                 if (usingForm)
+                {
                     Window.BeginInvoke(new Action<Checker[,]>(Window.Update), new object[] { field });
-                Thread.Sleep(TimeOutOfMove);
+                    Thread.Sleep(TimeOutOfMove);
+                }
+                if (usingTimer && movesCount > 1)
+                {
+                    time.Reset();
+                    time.Start();
+                }
                 validator.IsCorrectMove(black.MakeTurn(field), field, Color.Black);
+                if (usingTimer && movesCount > 1)
+                {
+                    time.Stop();
+                    var ms = time.Elapsed.Milliseconds;
+                    Logs.AddToLog(ms.ToString());
+                    MaxBlack = Math.Max(MaxBlack, ms);
+                }
                 if (usingForm)
+                {
                     Window.BeginInvoke(new Action<Checker[,]>(Window.Update), new object[] { field });
-                Thread.Sleep(TimeOutOfMove);
+                    Thread.Sleep(TimeOutOfMove);
+                }
             }
         }
     }
