@@ -54,21 +54,24 @@ namespace Checkers
                         var res = "WHITE WON THE GAME!!!";
                         Logs.AddToLog(res);
                         Console.WriteLine(res);
-                        Console.WriteLine("White's longest move: {0}ms. Black's longest move: {1}ms.", Program.MaxWhite, Program.MaxBlack);
+                        if (Program.usingTimer)
+                            Console.WriteLine("White's longest move: {0}ms. Black's longest move: {1}ms.", Program.MaxWhite, Program.MaxBlack);
                     }
                     if (Program.Winner < 0)
                     {
                         var res = "BLACK WON THE GAME!!!";
                         Logs.AddToLog(res);
                         Console.WriteLine(res);
-                        Console.WriteLine("White's longest move: {0}ms. Black's longest move: {1}ms.", Program.MaxWhite, Program.MaxBlack);
+                        if (Program.usingTimer)
+                            Console.WriteLine("White's longest move: {0}ms. Black's longest move: {1}ms.", Program.MaxWhite, Program.MaxBlack);
                     }
                     if (Program.Winner == 0)
                     {
                         var res = "DRAW!";
                         Logs.AddToLog(res);
                         Console.WriteLine(res);
-                        Console.WriteLine("White's longest move: {0}ms. Black's longest move: {1}ms.", Program.MaxWhite, Program.MaxBlack);
+                        if (Program.usingTimer)
+                            Console.WriteLine("White's longest move: {0}ms. Black's longest move: {1}ms.", Program.MaxWhite, Program.MaxBlack);
                     }
                     Logs.Done();
                     Environment.Exit(0);
